@@ -5,77 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing Tiers | 180 Math</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style> html { scroll-behavior: smooth; } </style>
-</head>
-<body class="bg-[#070b19] text-gray-200 font-sans">
+    <style>
+        html { scroll-behavior: smooth; }
 
-    <nav class="bg-[#0b1224] shadow-md fixed w-full z-10 top-0 border-b border-[#1a264a]">
+        /* Space Grid Background */
+        .bg-grid {
+            background-color: #070b19;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Interactive Hover Physics */
+        .btn-hover {
+            transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(34,211,238,.5);
+        }
+        
+        .card-hover {
+            transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(34,211,238,.4);
+            box-shadow: 0 10px 30px -10px rgba(34,211,238,.15);
+            background: rgba(255,255,255,.05);
+        }
+
+        .link-hover {
+            transition: color .2s ease, text-shadow .2s ease;
+        }
+        .link-hover:hover {
+            color: #22d3ee;
+            text-shadow: 0 0 8px rgba(34,211,238,.4);
+        }
+    </style>
+</head>
+<body class="bg-grid text-gray-200 font-sans flex flex-col min-h-screen relative">
+
+    <nav class="bg-[#060714]/90 backdrop-blur-md shadow-md fixed w-full z-20 top-0 border-b border-white/5">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center">
-                <img src="logo.png" alt="180 Math Logo" class="h-14 w-auto">
+                <img src="logo.png" alt="180 Math Logo" class="h-12 w-auto">
             </a>
             <div class="hidden md:flex space-x-6">
-                <a href="index.html" class="hover:text-[#d6b054] text-gray-300 transition font-semibold">&larr; Back to Home</a>
+                <a href="index.html" class="text-gray-300 font-semibold link-hover">&larr; Back to Home</a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-32 pb-12 px-4 max-w-6xl mx-auto text-center">
-        <h1 class="text-4xl font-extrabold text-white mb-4">Detailed Pricing Plans</h1>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto">Select the tier that matches your student's current grade level. All plans include customized curriculum alignment.</p>
+    <section class="pt-32 pb-12 px-4 max-w-6xl mx-auto text-center relative z-10">
+        <h1 class="text-4xl font-extrabold text-white mb-4 tracking-tight">Detailed Pricing Plans</h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">Select the tier that matches your student's current grade level. All plans include customized curriculum alignment.</p>
     </section>
 
-    <section id="group" class="py-12 px-4 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold text-white mb-8 text-center border-b border-[#1a264a] pb-4">Group Cohorts <span class="text-lg text-gray-400 font-normal ml-2">(Max 6 Students)</span></h2>
+    <section id="group" class="py-12 px-4 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-3xl font-bold text-white mb-8 text-center border-b border-white/10 pb-4">Group Cohorts <span class="text-lg text-gray-400 font-normal ml-2">(Max 6 Students)</span></h2>
         
-        <h3 class="text-xl font-bold text-[#d6b054] mb-6">Academic Tutoring</h3>
+        <h3 class="text-xl font-bold text-[#22d3ee] mb-6">Academic Tutoring</h3>
         <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <div class="bg-[#0b1224] border border-[#1a264a] rounded-lg p-8 shadow-sm text-center hover:border-[#d6b054] transition duration-300 group">
-                <h4 class="text-lg font-bold text-white mb-2">Elementary</h4>
-                <p class="text-4xl font-extrabold text-gray-300 mb-6">$250<span class="text-sm text-gray-500 font-normal">/month</span></p>
-                <a href="contact.html" class="block w-full border border-gray-500 text-gray-300 font-bold py-2 rounded group-hover:border-[#d6b054] group-hover:text-[#d6b054] transition">Contact Us</a>
+            <div class="bg-[#070b19] border border-white/10 rounded-2xl p-8 shadow-sm text-center card-hover flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-2">Elementary</h4>
+                    <p class="text-4xl font-extrabold text-white mb-6">$250<span class="text-sm text-gray-400 font-normal">/month</span></p>
+                </div>
+                <a href="contact.html" class="block w-full border border-[#22d3ee]/50 text-[#22d3ee] font-bold py-3 rounded-xl btn-hover bg-white/5">Contact Us</a>
             </div>
-            <div class="bg-[#0b1224] border border-[#1a264a] rounded-lg p-8 shadow-sm text-center hover:border-[#d6b054] transition duration-300 group">
-                <h4 class="text-lg font-bold text-white mb-2">Middle School</h4>
-                <p class="text-4xl font-extrabold text-gray-300 mb-6">$300<span class="text-sm text-gray-500 font-normal">/month</span></p>
-                <a href="contact.html" class="block w-full border border-gray-500 text-gray-300 font-bold py-2 rounded group-hover:border-[#d6b054] group-hover:text-[#d6b054] transition">Contact Us</a>
+            <div class="bg-[#070b19] border border-white/10 rounded-2xl p-8 shadow-sm text-center card-hover flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-2">Middle School</h4>
+                    <p class="text-4xl font-extrabold text-white mb-6">$300<span class="text-sm text-gray-400 font-normal">/month</span></p>
+                </div>
+                <a href="contact.html" class="block w-full border border-[#22d3ee]/50 text-[#22d3ee] font-bold py-3 rounded-xl btn-hover bg-white/5">Contact Us</a>
             </div>
-            <div class="bg-[#0b1224] border border-[#1a264a] rounded-lg p-8 shadow-sm text-center hover:border-[#d6b054] transition duration-300 group">
-                <h4 class="text-lg font-bold text-white mb-2">High School</h4>
-                <p class="text-4xl font-extrabold text-gray-300 mb-6">$350<span class="text-sm text-gray-500 font-normal">/month</span></p>
-                <a href="contact.html" class="block w-full border border-gray-500 text-gray-300 font-bold py-2 rounded group-hover:border-[#d6b054] group-hover:text-[#d6b054] transition">Contact Us</a>
+            <div class="bg-[#070b19] border border-white/10 rounded-2xl p-8 shadow-sm text-center card-hover flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-2">High School</h4>
+                    <p class="text-4xl font-extrabold text-white mb-6">$350<span class="text-sm text-gray-400 font-normal">/month</span></p>
+                </div>
+                <a href="contact.html" class="block w-full border border-[#22d3ee]/50 text-[#22d3ee] font-bold py-3 rounded-xl btn-hover bg-white/5">Contact Us</a>
             </div>
         </div>
 
-        <h3 class="text-xl font-bold text-[#d6b054] mb-6">SAT Preparation</h3>
+        <h3 class="text-xl font-bold text-[#22d3ee] mb-6">SAT Preparation</h3>
         <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div class="bg-[#111a30] border border-[#1a264a] rounded-lg p-8 shadow-sm text-center">
-                <h4 class="text-lg font-bold text-white mb-2">SAT - Short Term</h4>
-                <p class="text-4xl font-extrabold text-white mb-6">$800<span class="text-sm text-gray-400 font-normal block mt-1">Summer Bootcamp (4 weeks)</span></p>
-                <a href="contact.html" class="block w-full bg-[#d6b054] text-[#070b19] font-bold py-2 rounded hover:bg-[#be9b48] transition">Contact Us</a>
+            <div class="bg-[#070b19] border border-white/10 rounded-2xl p-8 shadow-sm text-center card-hover flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-2">SAT - Short Term</h4>
+                    <p class="text-4xl font-extrabold text-white mb-6">$800<span class="text-sm text-gray-400 font-normal block mt-2">Summer Bootcamp (4 weeks)</span></p>
+                </div>
+                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-bold py-3 rounded-xl btn-hover">Contact Us</a>
             </div>
-            <div class="bg-[#111a30] border border-[#1a264a] rounded-lg p-8 shadow-sm text-center flex flex-col justify-between">
+            <div class="bg-[#070b19] border border-white/10 rounded-2xl p-8 shadow-sm text-center flex flex-col justify-between card-hover">
                 <div>
                     <h4 class="text-lg font-bold text-white mb-2">SAT - Long Term</h4>
-                    <p class="text-4xl font-extrabold text-white mb-6">$480<span class="text-sm text-gray-400 font-normal block mt-1"> Monthly</span></p>
+                    <p class="text-3xl font-extrabold text-white mb-6">$800 <span class="text-sm text-gray-400 font-normal">for 8 weeks</span><br><span class="text-lg text-[#22d3ee]">OR</span><br>$400<span class="text-sm text-gray-400 font-normal"> Monthly</span></p>
                 </div>
-                <a href="contact.html" class="block w-full bg-[#d6b054] text-[#070b19] font-bold py-2 rounded hover:bg-[#be9b48] transition mt-auto">Contact Us</a>
+                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-bold py-3 rounded-xl btn-hover mt-auto">Contact Us</a>
             </div>
         </div>
     </section>
 
-    <section id="private" class="py-12 px-4 max-w-6xl mx-auto mb-16">
-        <h2 class="text-3xl font-bold text-white mb-8 text-center border-b border-[#1a264a] pb-4">Private 1x1 Tutoring</h2>
+    <section id="private" class="py-12 px-4 max-w-6xl mx-auto mb-16 relative z-10">
+        <h2 class="text-3xl font-bold text-white mb-8 text-center border-b border-white/10 pb-4">Private 1x1 Tutoring</h2>
         
-        <div class="max-w-lg mx-auto bg-[#0b1224] border border-[#1a264a] rounded-lg p-10 shadow-sm text-center">
+        <div class="max-w-lg mx-auto bg-[#070b19] border border-white/10 rounded-2xl p-10 shadow-sm text-center card-hover">
             <h3 class="text-2xl font-bold text-white mb-2">Contact Us</h3>
             <p class="text-gray-400 mb-8 mt-4 leading-relaxed">We offer highly personalized 1-on-1 tutoring for all grade levels and SAT prep tailored to your student's specific needs.</p>
-            <p class="text-3xl font-bold text-[#d6b054] mb-8">Call for Price</p>
-            <a href="contact.html" class="block w-full border-2 border-[#d6b054] text-[#d6b054] font-bold py-3 rounded hover:bg-[#111a30] transition text-lg">Reach Out Today</a>
+            <p class="text-3xl font-bold text-[#22d3ee] mb-8">Call for Price</p>
+            <a href="contact.html" class="block w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-bold py-3 rounded-xl btn-hover text-lg">Reach Out Today</a>
         </div>
     </section>
 
-    <footer class="bg-[#04060e] text-gray-500 py-8 text-center border-t border-[#1a264a]">
+    <footer class="bg-white/[0.02] text-gray-500 py-10 text-center border-t border-white/5 mt-auto relative z-10 backdrop-blur-sm">
         <p>&copy; 2026 180 Math. All rights reserved.</p>
     </footer>
 
