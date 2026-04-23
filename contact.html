@@ -5,58 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | 180 Math</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-[#070b19] text-gray-200 font-sans flex flex-col min-h-screen">
+    <style>
+        html { scroll-behavior: smooth; }
 
-    <nav class="bg-[#0b1224] shadow-md w-full z-10 border-b border-[#1a264a]">
+        /* Space Grid Background */
+        .bg-grid {
+            background-color: #070b19;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Interactive Hover Physics */
+        .btn-hover {
+            transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(34,211,238,.5);
+        }
+        
+        .card-hover {
+            transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(34,211,238,.4);
+            box-shadow: 0 10px 30px -10px rgba(34,211,238,.15);
+            background: rgba(255,255,255,.05);
+        }
+
+        .link-hover {
+            transition: color .2s ease, text-shadow .2s ease;
+        }
+        .link-hover:hover {
+            color: #22d3ee;
+            text-shadow: 0 0 8px rgba(34,211,238,.4);
+        }
+    </style>
+</head>
+<body class="bg-grid text-gray-200 font-sans flex flex-col min-h-screen relative">
+
+    <nav class="bg-[#060714]/90 backdrop-blur-md shadow-md fixed w-full z-20 top-0 border-b border-white/5">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center">
-                <img src="logo.png" alt="180 Math Logo" class="h-14 w-auto">
+                <img src="logo.png" alt="180 Math Logo" class="h-12 w-auto">
             </a>
             <div class="hidden md:flex space-x-6">
-                <a href="pricing.html" class="hover:text-[#d6b054] text-gray-300 transition font-semibold">&larr; Back to Pricing</a>
+                <a href="pricing.html" class="text-gray-300 font-semibold link-hover">&larr; Back to Pricing</a>
             </div>
         </div>
     </nav>
 
-    <section class="flex-grow py-16 px-4">
+    <section class="flex-grow pt-32 pb-16 px-4 relative z-10">
         <div class="max-w-2xl mx-auto">
             <div class="text-center mb-10">
-                <h1 class="text-4xl font-extrabold text-white mb-4">Get in Touch</h1>
-                <p class="text-lg text-gray-400">Fill out the form below to request pricing, join a waitlist, or ask a question. We will get back to you within 24 hours.</p>
+                <h1 class="text-4xl font-extrabold text-white mb-4 tracking-tight">Get in Touch</h1>
+                <p class="text-lg text-gray-400 leading-relaxed">Fill out the form below to request pricing, join a waitlist, or ask a question. We will get back to you within 24 hours.</p>
             </div>
 
-            <div class="bg-[#0b1224] border border-[#1a264a] rounded-xl p-8 shadow-lg">
+            <div class="bg-[#070b19] border border-white/10 rounded-2xl p-8 shadow-xl card-hover">
                 <form action="https://formspree.io/f/mojykkdn" method="POST" class="space-y-6">
                     
-                    <p class="text-sm text-gray-400 pb-2 border-b border-[#1a264a]"><span class="text-[#d6b054]">*</span> Indicates a required field</p>
+                    <p class="text-sm text-gray-400 pb-3 border-b border-white/10"><span class="text-[#22d3ee] font-bold">*</span> Indicates a required field</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-300 mb-2" for="parent_name">Parent Name <span class="text-[#d6b054]">*</span></label>
-                            <input type="text" id="parent_name" name="Parent Name" required class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition">
+                            <label class="block text-sm font-bold text-gray-300 mb-2" for="parent_name">Parent Name <span class="text-[#22d3ee]">*</span></label>
+                            <input type="text" id="parent_name" name="Parent Name" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] focus:bg-[#070b19] transition-colors">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-300 mb-2" for="student_name">Student Name <span class="text-[#d6b054]">*</span></label>
-                            <input type="text" id="student_name" name="Student Name" required class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition">
+                            <label class="block text-sm font-bold text-gray-300 mb-2" for="student_name">Student Name <span class="text-[#22d3ee]">*</span></label>
+                            <input type="text" id="student_name" name="Student Name" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] focus:bg-[#070b19] transition-colors">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-300 mb-2" for="email">Email Address <span class="text-[#d6b054]">*</span></label>
-                            <input type="email" id="email" name="Email" required class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition">
+                            <label class="block text-sm font-bold text-gray-300 mb-2" for="email">Email Address <span class="text-[#22d3ee]">*</span></label>
+                            <input type="email" id="email" name="Email" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] focus:bg-[#070b19] transition-colors">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-300 mb-2" for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="Phone" class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition">
+                            <input type="tel" id="phone" name="Phone" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] focus:bg-[#070b19] transition-colors">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-300 mb-2" for="grade">Student Grade Level <span class="text-[#d6b054]">*</span></label>
-                            <select id="grade" name="Grade Level" required class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition appearance-none">
+                            <label class="block text-sm font-bold text-gray-300 mb-2" for="grade">Student Grade Level <span class="text-[#22d3ee]">*</span></label>
+                            <select id="grade" name="Grade Level" required class="w-full bg-[#070b19] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] transition-colors appearance-none">
                                 <option value="" disabled selected>Select a grade...</option>
                                 <option value="Elementary">Elementary (Grades 3-5)</option>
                                 <option value="Middle School">Middle School (Grades 6-8)</option>
@@ -64,8 +103,8 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-300 mb-2" for="program">Program of Interest <span class="text-[#d6b054]">*</span></label>
-                            <select id="program" name="Program" required class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition appearance-none">
+                            <label class="block text-sm font-bold text-gray-300 mb-2" for="program">Program of Interest <span class="text-[#22d3ee]">*</span></label>
+                            <select id="program" name="Program" required class="w-full bg-[#070b19] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] transition-colors appearance-none">
                                 <option value="" disabled selected>Select a program...</option>
                                 <option value="Group Cohort">Group Cohort</option>
                                 <option value="Private 1-on-1">Private 1-on-1 Tutoring</option>
@@ -79,7 +118,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-gray-300 mb-2" for="preferred_contact">Preferred Mode of Contact</label>
-                            <select id="preferred_contact" name="Preferred Contact" class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition appearance-none">
+                            <select id="preferred_contact" name="Preferred Contact" class="w-full bg-[#070b19] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] transition-colors appearance-none">
                                 <option value="Email" selected>Email</option>
                                 <option value="Phone">Phone</option>
                             </select>
@@ -88,10 +127,10 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-300 mb-2" for="message">Message / Questions</label>
-                        <textarea id="message" name="Message" rows="4" class="w-full bg-[#111a30] border border-[#1a264a] rounded px-4 py-3 text-white focus:outline-none focus:border-[#d6b054] transition"></textarea>
+                        <textarea id="message" name="Message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee] focus:bg-[#070b19] transition-colors"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-[#d6b054] text-[#070b19] font-extrabold text-lg py-3 rounded hover:bg-[#be9b48] transition mt-4">
+                    <button type="submit" class="w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-extrabold text-lg py-4 rounded-xl btn-hover mt-6">
                         Send Message
                     </button>
                 </form>
@@ -99,7 +138,7 @@
         </div>
     </section>
 
-    <footer class="bg-[#04060e] text-gray-500 py-8 text-center border-t border-[#1a264a]">
+    <footer class="bg-white/[0.02] text-gray-500 py-10 text-center border-t border-white/5 mt-auto relative z-10 backdrop-blur-sm">
         <p>&copy; 2026 180 Math. All rights reserved.</p>
     </footer>
 
