@@ -3,123 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | 180 Math</title>
+    <title>180 Math | Premier Math Tutoring</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        html { scroll-behavior: smooth; }
+        :root {
+            /* Scroll variable for parallax, updated by JS */
+            --scroll: 0px;
+        }
+        
+        html { scroll-behavior: smooth; background-color: #070b19; }
 
-        /* 1. Grainy Noise Overlay */
-        .bg-grid::before {
-            content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none;
-            opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        /* 9. Noise + Texture */
+        .cinematic-noise {
+            position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+            opacity: 0.05; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 2. Twinkling Star Dots Layer */
-        body::after {
-            content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: 0.35;
-            background-image: radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px); background-size: 4px 4px;
-            mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-            -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-            animation: twinkle 8s linear infinite;
+        /* 4. Strong lighting + 10. Light direction consistency (Top-Left Light Source) */
+        .global-light {
+            position: fixed; top: -20vh; left: -20vw; width: 80vw; height: 80vh;
+            background: radial-gradient(circle at center, rgba(34, 211, 238, 0.12) 0%, transparent 70%);
+            z-index: -3; pointer-events: none;
         }
-        @keyframes twinkle { 0% { opacity: 0.35; } 50% { opacity: 0.1; } 100% { opacity: 0.35; } }
 
-        /* Space Grid Background */
+        /* Deep Background Grid */
         .bg-grid {
-            background-color: #070b19;
+            position: fixed; inset: -50vh -50vw; z-index: -4;
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            /* Parallax mapping */
+            transform: translateY(calc(var(--scroll) * 0.15));
         }
 
-        /* Spotlight Border */
+        /* 3. Blur = distance illusion + 2. Parallax (Floating Background Props) */
+        .floating-prop {
+            position: fixed; z-index: -3; color: rgba(255,255,255,0.03); 
+            font-weight: 900; pointer-events: none;
+        }
+        .prop-1 { top: 15%; left: 5%; font-size: 30rem; filter: blur(12px); transform: translateY(calc(var(--scroll) * 0.4)) rotate(15deg); }
+        .prop-2 { top: 50%; right: -5%; font-size: 40rem; filter: blur(18px); transform: translateY(calc(var(--scroll) * 0.25)) rotate(-10deg); }
+        .prop-3 { bottom: -10%; left: 20%; font-size: 25rem; filter: blur(8px); transform: translateY(calc(var(--scroll) * 0.5)) rotate(5deg); }
+
+        /* 5. Shadow Hierarchy & 6. 3D Transforms */
+        .perspective-container { perspective: 1200px; }
+        
         .spotlight-card {
             position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease-out;
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            /* Consistent light: Bright top/left edges, dark bottom/right edges */
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+            border-right: 1px solid rgba(0, 0, 0, 0.5);
+            /* Far object shadow */
+            box-shadow: 20px 30px 60px rgba(0, 0, 0, 0.4), -5px -5px 20px rgba(34, 211, 238, 0.03);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
             transform-style: preserve-3d;
             border-radius: 1.5rem;
+            overflow: hidden;
         }
-        .spotlight-card::before {
-            content: ""; position: absolute; inset: -1px; z-index: -1;
-            background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.3), transparent 40%);
-            border-radius: inherit;
+        
+        /* 3D Content pop */
+        .spotlight-card > * { transform: translateZ(30px); }
+
+        /* Card Glare (Physical light reflection) */
+        .spotlight-card::after {
+            content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.08), transparent 40%);
+            transition: opacity 0.3s; opacity: 0;
+        }
+        .spotlight-card:hover::after { opacity: 1; }
+        .spotlight-card:hover {
+            /* Near object shadow */
+            box-shadow: 30px 40px 70px rgba(0, 0, 0, 0.6), -5px -5px 25px rgba(34, 211, 238, 0.08);
+            z-index: 20;
         }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.15, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .btn-glow { position: relative; transition: all 0.3s ease; }
-        .btn-glow:hover { box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); transform: translateY(-2px); }
+        /* 8. Motion Layering (Foreground Buttons) */
+        .btn-glow { 
+            position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            transform: translateZ(50px);
+        }
+        .btn-glow:hover { 
+            box-shadow: 0 15px 30px rgba(34, 211, 238, 0.4), 0 5px 15px rgba(0,0,0,0.5); 
+            transform: translateY(-8px) translateZ(50px); 
+        }
+        
         .link-hover { transition: color .2s ease, text-shadow .2s ease; }
-        .link-hover:hover { color: #22d3ee; text-shadow: 0 0 8px rgba(34,211,238,.4); }
+        .link-hover:hover { color: #22d3ee; text-shadow: 0 0 12px rgba(34,211,238,.6); }
+
+        /* Smooth Scroll Reveals */
+        .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
     </style>
 </head>
-<body class="bg-grid text-gray-200 font-sans flex flex-col min-h-screen relative overflow-x-hidden">
+<body class="text-gray-200 font-sans relative overflow-x-hidden">
 
-    <canvas id="tech-canvas" class="fixed inset-0 z-[-1] pointer-events-none opacity-50"></canvas>
+    <div class="cinematic-noise"></div>
+    <div class="global-light"></div>
 
-    <nav class="bg-[#0C0B33]/80 backdrop-blur-xl shadow-lg fixed w-full z-50 top-0 border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center">
-                <img src="logo.png" alt="180 Math Logo" class="h-10 w-auto brightness-110">
+    <div class="bg-grid"></div>
+    <div class="floating-prop prop-1 font-serif">π</div>
+    <div class="floating-prop prop-2 font-serif">∫</div>
+    <div class="floating-prop prop-3 font-serif">∞</div>
+
+    <canvas id="tech-canvas" class="fixed inset-0 z-[-1] pointer-events-none opacity-40"></canvas>
+
+    <nav class="bg-[#0C0B33]/70 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] fixed w-full z-50 top-0 border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center transform translateZ(0)">
+            <a href="#" class="flex items-center">
+                <img src="logo.png" alt="180 Math Logo" class="h-12 w-auto drop-shadow-md">
             </a>
-            <div class="hidden md:flex space-x-8 text-xs uppercase tracking-widest font-bold">
-                <a href="pricing.html" class="hover:text-cyan-400 transition-colors link-hover">&larr; Back to Pricing</a>
+            <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-cyan-100/70">
+                <a href="#offering" class="link-hover">Program</a>
+                <a href="#pricing" class="link-hover">Pricing</a>
+                <a href="#reviews" class="link-hover">Reviews</a>
+                <a href="#faq" class="link-hover">FAQ</a>
+                <a href="#calendar" class="link-hover">Calendar</a>
             </div>
         </div>
     </nav>
 
-    <section class="flex-grow pt-40 pb-24 px-6 relative z-10">
-        <div class="max-w-3xl mx-auto">
-            <div class="text-center mb-12 reveal active">
-                <h1 class="text-5xl font-black text-white mb-6 tracking-tighter">Initialize Contact</h1>
-                <p class="text-lg text-cyan-100/60 leading-relaxed font-light tracking-wide">Enter your parameters below to request pricing or join a waitlist. Processed within 24 hours.</p>
+    <section id="offering" class="min-h-[100vh] flex flex-col justify-center items-center text-center px-4 relative pt-20 pb-24 perspective-container" style="background: radial-gradient(circle at 50% 30%, #0C0B33 0%, transparent 80%);">
+        <div class="max-w-4xl w-full flex flex-col items-center z-10 reveal active" id="hero-logo-container">
+            <img src="logo.png" alt="180 Math Logo Banner" class="w-full max-w-lg md:max-w-2xl mb-12 object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] transform transition-transform duration-700 hover:scale-105">
+            <p class="text-xl md:text-2xl text-cyan-50/90 max-w-2xl mx-auto leading-relaxed font-light tracking-wide decipher-text drop-shadow-lg">
+                Comprehensive tutoring designed to turn your grades around. From foundational algebra to AP pre-calculus, we build confidence and competence.
+            </p>
+        </div>
+        <div class="absolute bottom-16 w-full flex justify-center z-20 reveal delay-200 active perspective-container">
+            <a href="#pricing" class="bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] px-12 py-5 rounded-full font-black uppercase tracking-wider text-sm btn-glow backdrop-blur-md">Get Started</a>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-32 px-4 relative z-10 border-t border-white/5 backdrop-blur-md bg-[#070b19]/40">
+        <div class="max-w-6xl mx-auto text-center perspective-container">
+            <h2 class="text-5xl font-black text-white mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">What Our Learners Say</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
+                <div class="spotlight-card p-10 reveal">
+                    <p class="italic text-cyan-50/80 mb-8 leading-relaxed font-light text-lg">"INSERT YOUR FIRST TESTIMONIAL HERE. This completely changed how I approach problem-solving."</p>
+                    <p class="font-bold text-[#22d3ee] uppercase tracking-widest text-xs border-t border-white/10 pt-4">- Student Name</p>
+                </div>
+                <div class="spotlight-card p-10 reveal delay-100">
+                    <p class="italic text-cyan-50/80 mb-8 leading-relaxed font-light text-lg">"INSERT YOUR SECOND TESTIMONIAL HERE. The best investment in my education."</p>
+                    <p class="font-bold text-[#22d3ee] uppercase tracking-widest text-xs border-t border-white/10 pt-4">- Student Name</p>
+                </div>
+                 <div class="spotlight-card p-10 reveal delay-200">
+                    <p class="italic text-cyan-50/80 mb-8 leading-relaxed font-light text-lg">"INSERT YOUR THIRD TESTIMONIAL HERE. Clear, concise, and incredibly helpful."</p>
+                    <p class="font-bold text-[#22d3ee] uppercase tracking-widest text-xs border-t border-white/10 pt-4">- Student Name</p>
+                </div>
             </div>
 
-            <div class="spotlight-card p-10 shadow-2xl reveal active backdrop-blur-md border-cyan-500/10">
-                <form action="https://formspree.io/f/mojykkdn" method="POST" class="space-y-8">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 pb-4 border-b border-white/10 font-bold"><span class="text-cyan-400 text-lg leading-none mr-1">*</span> Required Parameters</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label class="block text-xs uppercase tracking-widest font-bold text-gray-400 mb-3">Parent Name <span class="text-cyan-400">*</span></label><input type="text" name="Parent Name" required class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-all"></div>
-                        <div><label class="block text-xs uppercase tracking-widest font-bold text-gray-400 mb-3">Student Name <span class="text-cyan-400">*</span></label><input type="text" name="Student Name" required class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-all"></div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label class="block text-xs uppercase tracking-widest font-bold text-gray-400 mb-3">Email Address <span class="text-cyan-400">*</span></label><input type="email" name="Email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-all"></div>
-                        <div><label class="block text-xs uppercase tracking-widest font-bold text-gray-400 mb-3">Phone Number</label><input type="tel" name="Phone" class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-all"></div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label class="block text-xs uppercase tracking-widest font-bold text-gray-400 mb-3">Student Grade <span class="text-cyan-400">*</span></label><select name="Grade Level" required class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 appearance-none cursor-pointer"><option value="" disabled selected>Select...</option><option>Elementary</option><option>Middle School</option><option>High School</option></select></div>
-                        <div><label class="block text-xs uppercase tracking-widest font-bold text-gray-400 mb-3">Program <span class="text-cyan-400">*</span></label><select name="Program" required class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 appearance-none cursor-pointer"><option value="" disabled selected>Select...</option><option>Group Cohort</option><option>Private 1-on-1</option><option>SAT Prep</option></select></div>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-black text-sm uppercase tracking-widest py-5 rounded-xl btn-glow">Transmit Data</button>
-                </form>
+            <h2 class="text-5xl font-black text-white mt-32 mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">What Our Parents Say</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
+                <div class="spotlight-card p-10 reveal">
+                    <p class="italic text-cyan-50/80 mb-8 leading-relaxed font-light text-lg">"INSERT YOUR FIRST TESTIMONIAL HERE. This completely changed how I approach problem-solving."</p>
+                    <p class="font-bold text-[#a78bfa] uppercase tracking-widest text-xs border-t border-white/10 pt-4">- Parent Name</p>
+                </div>
+                <div class="spotlight-card p-10 reveal delay-100">
+                    <p class="italic text-cyan-50/80 mb-8 leading-relaxed font-light text-lg">"INSERT YOUR SECOND TESTIMONIAL HERE. The best investment in my education."</p>
+                    <p class="font-bold text-[#a78bfa] uppercase tracking-widest text-xs border-t border-white/10 pt-4">- Parent Name</p>
+                </div>
+                 <div class="spotlight-card p-10 reveal delay-200">
+                    <p class="italic text-cyan-50/80 mb-8 leading-relaxed font-light text-lg">"INSERT YOUR THIRD TESTIMONIAL HERE. Clear, concise, and incredibly helpful."</p>
+                    <p class="font-bold text-[#a78bfa] uppercase tracking-widest text-xs border-t border-white/10 pt-4">- Parent Name</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#04060e] text-gray-600 py-12 text-center border-t border-white/5 mt-auto relative z-10">
-        <p>&copy; 2026 180 Math. All rights reserved.</p>
+    <section id="pricing" class="py-32 px-6 max-w-6xl mx-auto text-center relative z-10 perspective-container">
+        <h2 class="text-5xl font-black text-white mb-20 tracking-tighter reveal drop-shadow-2xl decipher-text">Simple, Transparent Pricing</h2>
+        <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            
+            <div class="spotlight-card p-12 flex flex-col justify-between reveal">
+                <div class="transform translateZ(30px)">
+                    <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Private 1-on-1</h3>
+                    <p class="text-2xl font-extrabold text-[#22d3ee] mb-8">Call for Price</p>
+                    <ul class="text-left space-y-5 mb-10 text-cyan-50/70 font-light">
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_#22d3ee] mr-4"></span> Highly personalized curriculum</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_#22d3ee] mr-4"></span> Dedicated homework assistance</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_#22d3ee] mr-4"></span> Intensive exam prep</li>
+                    </ul>
+                </div>
+                <a href="pricing.html#private" class="block w-full py-4 border border-[#22d3ee]/40 rounded-xl font-bold text-[#22d3ee] hover:bg-[#22d3ee] hover:text-[#070b19] transition-all duration-300 btn-glow">Check Availability</a>
+            </div>
+            
+            <div class="spotlight-card p-12 flex flex-col justify-between reveal delay-100 border-[#22d3ee]/30">
+                <div class="transform translateZ(30px)">
+                    <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Group Cohorts</h3>
+                    <p class="text-4xl font-black text-white mb-8">From $250<span class="text-lg font-light text-cyan-50/50">/mo</span></p>
+                    <ul class="text-left space-y-5 mb-10 text-cyan-50/70 font-light">
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_#22d3ee] mr-4"></span> Collaborative peer learning</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_#22d3ee] mr-4"></span> Weekly core concept reviews</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_#22d3ee] mr-4"></span> Maximum 6 students per Cohort</li>
+                    </ul>
+                </div>
+                <a href="pricing.html#group" class="block w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-black uppercase tracking-wider py-4 rounded-xl btn-glow shadow-[0_0_20px_rgba(34,211,238,0.4)]">View Options</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="calendar" class="py-32 px-4 border-y border-white/5 backdrop-blur-md bg-[#070b19]/40 relative z-10 perspective-container">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-5xl font-black text-white mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">Schedule & Holidays</h2>
+            <div class="spotlight-card p-12 text-left reveal">
+                <h4 class="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4 uppercase tracking-widest text-[#22d3ee] drop-shadow-md transform translateZ(20px)">Aligned with South Windsor Public Schools</h4>
+                <p class="text-cyan-50/80 mb-8 leading-relaxed text-lg font-light transform translateZ(10px)">Our tutoring schedule is fully aligned with the <a href="https://www.southwindsorschools.org/287651_2" target="_blank" rel="noopener noreferrer" class="text-white font-bold underline decoration-[#22d3ee] decoration-2 underline-offset-4 hover:text-[#22d3ee] hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">South Windsor Public Schools (SWPS) academic calendar</a>. We observe all major SWPS holidays and will work with families for one-off holidays.</p>
+                <div class="flex flex-col sm:flex-row gap-6 mt-4 transform translateZ(30px)">
+                    <a href="https://www.southwindsorschools.org/287651_2" target="_blank" rel="noopener noreferrer" class="text-[#22d3ee] underline underline-offset-4 font-bold uppercase tracking-wider text-xs link-hover">View Official SWPS Calendar &nearr;</a>
+                    <a href="#faq" class="text-[#22d3ee] underline underline-offset-4 font-bold uppercase tracking-wider text-xs link-hover">View Holiday Details in FAQ &darr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-32 px-4 max-w-4xl mx-auto relative z-10 perspective-container">
+        <h2 class="text-5xl font-black text-white mb-16 text-center tracking-tighter reveal drop-shadow-2xl decipher-text">Frequently Asked Questions</h2>
+        <div class="space-y-6">
+            
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">What subjects do you teach?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">At 180Math, we teach Mathematics starting from Elementary (Grade 3 and above) to High School (up to AP Pre-Calculus).</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">What is offered as part of the tutoring service?</summary>
+                <div class="mt-6 text-cyan-50/70 text-sm space-y-8 font-light transform translateZ(10px)">
+                    <p class="italic text-gray-400">Following information is for both: Group cohorts as well as Private lessons.</p>
+                    
+                    <div class="bg-black/30 p-6 rounded-xl border border-white/5 shadow-inner">
+                        <strong class="text-white text-base uppercase tracking-widest text-[#22d3ee] font-bold">For Academic Curriculum:</strong>
+                        <ul class="list-disc pl-6 mt-4 space-y-3">
+                            <li>36 weeks of lessons</li>
+                            <li>2 Hour lessons each week</li>
+                            <li>Concept oriented learning</li>
+                            <li>Test/Quiz Preparation</li>
+                            <li>Concepts for homework help</li>
+                            <li>Extra help for students if need be*</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-black/30 p-6 rounded-xl border border-white/5 shadow-inner">
+                        <strong class="text-white text-base uppercase tracking-widest text-[#22d3ee] font-bold">For SAT Preparation:</strong>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-white/5 p-6 rounded-xl border border-white/10 shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
+                                <span class="font-black text-white block mb-2 text-lg">Short Term Prep</span>
+                                <span class="text-xs text-[#22d3ee] font-bold block mb-4 uppercase tracking-widest">Summer Bootcamp: 4 Weeks</span>
+                                <ul class="list-none space-y-3 mb-6">
+                                    <li><span class="text-[#22d3ee] mr-3">⏱</span> Timeline: 4 weeks</li>
+                                    <li><span class="text-[#22d3ee] mr-3">📝</span> 8 Full Length Tests</li>
+                                    <li><span class="text-[#22d3ee] mr-3">📅</span> Weekly: 4 hour lessons</li>
+                                </ul>
+                                <span class="text-xs text-gray-400 uppercase font-bold border-b border-white/10 pb-2 block mb-3">2 Batches to choose from:</span>
+                                <ul class="list-disc pl-5 text-cyan-50/70 text-xs space-y-2">
+                                    <li>Batch 1: June 22 - July 17th 2026</li>
+                                    <li>Batch 2: August 3rd - August 28th 2026</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/5 p-6 rounded-xl border border-white/10 shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
+                                <span class="font-black text-white block mb-2 text-lg">Long Term Prep</span>
+                                <span class="text-xs text-[#22d3ee] font-bold block mb-4 uppercase tracking-widest">8 Weeks</span>
+                                <ul class="list-none space-y-3 mb-6">
+                                    <li><span class="text-[#22d3ee] mr-3">⏱</span> Timeline: 8 weeks</li>
+                                    <li><span class="text-[#22d3ee] mr-3">📝</span> 8 Full Length Tests</li>
+                                    <li><span class="text-[#22d3ee] mr-3">📅</span> Weekly: 2 hour lessons</li>
+                                </ul>
+                                <span class="text-xs text-gray-400 uppercase font-bold border-b border-white/10 pb-2 block mb-3">2 Batches to choose from:</span>
+                                <ul class="list-disc pl-5 text-cyan-50/70 text-xs space-y-2">
+                                    <li>Batch 1: August 31st - October 23rd 2026</li>
+                                    <li>Batch 2: Oct 26th 2026 - Jan 28th 2027 **</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-white/5 p-6 rounded-xl border border-white/10 shadow-[0_10px_20px_rgba(0,0,0,0.3)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <span class="font-black text-white block mb-1 text-lg">Long Term Prep <span class="text-[#22d3ee] text-sm">(Monthly)</span></span>
+                                <span class="text-cyan-50/70 text-xs">Unlimited Full Length Tests (1/week) • Weekly 2hr lessons</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-bold text-white uppercase tracking-widest block">Timeline: Until exam</span>
+                                <span class="text-xs text-[#22d3ee]">Start anytime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">How big is the class size in a group cohort?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">There would be a maximum of 6 Students in each batch. Small batches help the students stay focussed and get individualized attention.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">Do you offer homework help?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">Challenging questions are always welcome in the class and benefit all students. However, students are expected to try solving their homework at home before requesting help in the class. Their attempted work, even if wrong, identifies the exact concept they need coaching on.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">Do you assign homework?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">Yes, homework is assigned weekly, either via textbook problems or Deltamath. Students are also encouraged to keep practicing multiplication tables 1 through 20 every week to help speed up their mental calculations. Parents are accountable to make sure their child completes the work on time and satisfactorily. A separate book for homework is requested.</p>
+            </details>
+            
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">What is your Group Cohort pricing?</summary>
+                <div class="mt-6 text-cyan-50/70 transform translateZ(10px)">
+                    <div class="overflow-x-auto bg-black/30 rounded-xl p-4 border border-white/5 shadow-inner">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-white/20 text-xs uppercase tracking-widest text-[#22d3ee]">
+                                    <th class="py-4 font-bold pl-4">Program</th>
+                                    <th class="py-4 font-bold">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-5 pl-4 font-semibold text-white">Elementary</td><td class="py-5 text-[#22d3ee] font-black tracking-wide">$250/mo</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-5 pl-4 font-semibold text-white">Middle School</td><td class="py-5 text-[#22d3ee] font-black tracking-wide">$300/mo</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-5 pl-4 font-semibold text-white">High School</td><td class="py-5 text-[#22d3ee] font-black tracking-wide">$350/mo</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-5 pl-4 font-semibold text-white">SAT - Short Term - Summer Bootcamp (4 weeks)</td><td class="py-5 text-[#22d3ee] font-black tracking-wide">$800</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-5 pl-4 font-semibold text-white">SAT - Long Term - 8 weeks</td><td class="py-5 text-[#22d3ee] font-black tracking-wide">$800</td></tr>
+                                <tr class="hover:bg-white/5 transition"><td class="py-5 pl-4 font-semibold text-white">SAT - Long Term - Monthly</td><td class="py-5 text-[#22d3ee] font-black tracking-wide">$400/mo</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="font-bold text-white text-lg mt-6 drop-shadow-md">Private 1x1 Tutoring: <span class="text-[#22d3ee] font-normal italic">Call for Price</span></p>
+                </div>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">When are the fees due?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">Fees are expected to be paid by 5th of every month.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">Will fees be prorated for the month of June since it has only two working weeks?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">Yes. The June fees will be prorated, and the adjustment will be applied in April 2027, based on the official last day of the school year.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">Are the fees prorated if my child is absent for a session?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">No, fees are not prorated for student absences, as the class is still conducted for the rest of the group. If a student misses a session, the teacher will provide all materials covered—such as whiteboard notes, topics reviewed, and instructional videos. The student will also receive additional support in the following class to help them catch up.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">Are the fees prorated if the teacher cancels a session?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">Standard monthly fees are calculated with the understanding that up to two emergency teacher cancellations may occur during the academic year. If additional cancellations happen for any reason, every effort will be made to schedule a makeup class. If a makeup session cannot be arranged, the fees will be prorated in the following month.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">The school calendar shows 42–43 weeks. Why are students receiving 36 weeks of lessons?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">The school year includes 42 academic weeks, but 4 holiday weeks*** and 2 emergency teacher-cancellation weeks are already accounted for in the annual schedule. After excluding these six weeks, students receive 36 weeks of instruction.<br><br>If the school board extends the academic year by an additional week, we will be notified around April 2027, and class schedules will be extended accordingly.</p>
+            </details>
+
+            <details class="spotlight-card p-6 cursor-pointer group reveal">
+                <summary class="font-bold text-xl text-white outline-none link-hover drop-shadow-md transform translateZ(20px)">Other than the 4 weeks mentioned, do students get additional holidays?</summary>
+                <p class="mt-4 text-cyan-50/70 leading-relaxed font-light transform translateZ(10px)">Currently, we follow the South Windsor Public School calendar. For Holidays falling on a weekday, such as Diwali, Holi, Presidents Day etc., parents will be consulted if a Holiday is needed. We will go with the majority. Fees will be prorated in the following month if the class is cancelled on a holiday.</p>
+            </details>
+
+        </div>
+
+        <div class="mt-20 spotlight-card p-8 text-sm text-gray-400 reveal">
+            <div class="transform translateZ(15px)">
+                <p class="mb-3"><strong class="text-[#22d3ee] font-bold tracking-widest">– *</strong> Extra lessons are charged at Private lesson rate.</p>
+                <p class="mb-3"><strong class="text-[#22d3ee] font-bold tracking-widest">– **</strong> No classes Thanksgiving week and Christmas Holidays.</p>
+                <p class="mb-4 font-bold text-white uppercase tracking-widest text-xs mt-8"><strong class="text-[#22d3ee]">– ***</strong> Holiday weeks with no lessons:</p>
+                <ul class="list-none pl-6 space-y-3 text-cyan-50/60 font-light">
+                    <li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full shadow-[0_0_5px_#22d3ee] mr-4"></span> Thanksgiving week: November 23rd to November 27th 2027</li>
+                    <li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full shadow-[0_0_5px_#22d3ee] mr-4"></span> Christmas Holidays: December 21st, 2026 to January 1st, 2027</li>
+                    <li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full shadow-[0_0_5px_#22d3ee] mr-4"></span> Spring Break: April 12th - April 16th 2027</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#04060e] text-gray-600 py-16 text-center border-t border-white/5 relative z-10">
+        <p class="tracking-widest uppercase text-xs font-bold">&copy; 2026 180 Math. All rights reserved.</p>
     </footer>
 
     <script>
+        // 1. Scroll Parallax Binder
+        window.addEventListener('scroll', () => {
+            document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
+        });
+
+        // 2. Decipher Text Engine
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
+        function scramble(el) {
+            let iteration = 0; const originalText = el.innerText;
+            const interval = setInterval(() => {
+                el.innerText = el.innerText.split("").map((letter, index) => {
+                    if(index < iteration) return originalText[index];
+                    return letters[Math.floor(Math.random() * letters.length)];
+                }).join("");
+                if(iteration >= originalText.length) clearInterval(interval);
+                iteration += 1 / 3;
+            }, 30);
+        }
+        
+        // 3. 3D Spotlight Tilt Engine
         document.querySelectorAll(".spotlight-card").forEach(card => {
             card.onmousemove = e => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left; const y = e.clientY - rect.top;
                 card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
+                
                 const xc = rect.width / 2; const yc = rect.height / 2;
                 const dx = x - xc; const dy = y - yc;
-                card.style.transform = `rotateY(${dx / 60}deg) rotateX(${-dy / 60}deg) scale3d(1.01, 1.01, 1.01)`;
+                // Physical depth rotation
+                card.style.transform = `rotateY(${dx / 40}deg) rotateX(${-dy / 40}deg) scale3d(1.02, 1.02, 1.02)`;
             };
             card.onmouseleave = () => { card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`; };
         });
+
+        // 4. Scroll Reveals
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if(entry.target.classList.contains('decipher-text')) {
+                        scramble(entry.target);
+                        entry.target.classList.remove('decipher-text');
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        const canvas = document.getElementById('tech-canvas'); const ctx = canvas.getContext('2d');
+
+        // 5. Canvas Background Particle Engine
+        const canvas = document.getElementById('tech-canvas');
+        const ctx = canvas.getContext('2d');
         let width, height, particles = [];
         function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
@@ -131,8 +449,12 @@
             update() { this.x += this.vx; this.y += this.vy; if(this.x<0 || this.x>width) this.vx*=-1; if(this.y<0 || this.y>height) this.vy*=-1; }
             draw() { ctx.fillStyle = 'rgba(34, 211, 238, 0.2)'; ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI*2); ctx.fill(); }
         }
-        for(let i=0; i<80; i++) particles.push(new Particle());
-        function anim() { ctx.clearRect(0,0,width,height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(anim); }
+        for(let i=0; i<70; i++) particles.push(new Particle());
+        function anim() {
+            ctx.clearRect(0,0,width,height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(anim);
+        }
         anim();
     </script>
 </body>
