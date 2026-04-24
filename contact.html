@@ -150,7 +150,16 @@
     </footer>
 
     <script>
-        window.addEventListener('scroll', () => { document.documentElement.style.setProperty('--scroll', window.scrollY + 'px'); });
+        let scrollTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(() => {
+                    document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
 
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
         function scramble(el) {
@@ -202,7 +211,6 @@
             });
         }
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('scroll', updateRects);
         
         class MathParticle {
             constructor() { this.spawn(true); }

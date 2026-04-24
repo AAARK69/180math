@@ -350,7 +350,16 @@
 
     <script>
         // 1. Scroll Parallax Binder
-        window.addEventListener('scroll', () => { document.documentElement.style.setProperty('--scroll', window.scrollY + 'px'); });
+        let scrollTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(() => {
+                    document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
 
         // 2. Decipher Text Engine
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
@@ -418,8 +427,6 @@
         }
 
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('scroll', updateRects);
-        setInterval(updateRects, 1000); 
         
         class MathParticle {
             constructor() { this.spawn(true); }
