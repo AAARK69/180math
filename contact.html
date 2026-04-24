@@ -10,7 +10,15 @@
         html { scroll-behavior: smooth; background-color: #070b19; }
 
         /* Cinematic Noise Overlay */
-        .cinematic-noise { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        .cinematic-noise { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay; /*
+           ASSET OPTIMIZATION STRATEGY:
+           - Noise: The SVG fractalNoise is computationally expensive (high paint cost).
+             For production, pre-render this into a small (e.g. 200x200), looping WebP or PNG texture tile.
+             We reduced numOctaves to 1 here as a stopgap for better performance until asset swap.
+           - Images: Any standard image tags (e.g., logo) should use modern formats (WebP/AVIF),
+             include width/height attributes, and use `loading="lazy"` if below the fold.
+        */
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
         /* Global Lighting */
         .global-light { position: fixed; top: -20vh; left: -20vw; width: 80vw; height: 80vh; background: radial-gradient(circle at center, rgba(34, 211, 238, 0.12) 0%, transparent 70%); z-index: -3; pointer-events: none; }
         /* Deep Background Grid */
@@ -27,6 +35,7 @@
             position: relative; background: linear-gradient(135deg, rgba(7, 11, 25, 0.9) 0%, rgba(7, 11, 25, 0.6) 100%); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid rgba(255, 255, 255, 0.15); border-left: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(0, 0, 0, 0.5); border-right: 1px solid rgba(0, 0, 0, 0.5);
             box-shadow: 20px 30px 60px rgba(0, 0, 0, 0.4), -5px -5px 20px rgba(34, 211, 238, 0.03); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease; transform-style: preserve-3d; border-radius: 1.5rem;
+            will-change: transform; backface-visibility: hidden;
         }
         .spotlight-card > * { transform: translateZ(30px); }
         .spotlight-card::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.15), transparent 40%); transition: opacity 0.3s; opacity: 0; border-radius: inherit; }
@@ -41,7 +50,7 @@
         input:focus, select:focus, textarea:focus { box-shadow: 0 0 20px rgba(34, 211, 238, 0.15); border-color: #22d3ee !important; }
 
         /* Scroll Reveals */
-        .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; backface-visibility: hidden; }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
     </style>
 </head>
@@ -150,16 +159,7 @@
     </footer>
 
     <script>
-        let scrollTicking = false;
-        window.addEventListener('scroll', () => {
-            if (!scrollTicking) {
-                window.requestAnimationFrame(() => {
-                    document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
-                    scrollTicking = false;
-                });
-                scrollTicking = true;
-            }
-        }, { passive: true });
+        window.addEventListener('scroll', () => { document.documentElement.style.setProperty('--scroll', window.scrollY + 'px'); });
 
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
         function scramble(el) {
@@ -175,16 +175,25 @@
         }
         
         document.querySelectorAll(".spotlight-card").forEach(card => {
-            card.onmousemove = e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
-                const xc = rect.width / 2; const yc = rect.height / 2;
-                const dx = x - xc; const dy = y - yc;
-                // Make the tilt extremely subtle on forms so it isn't distracting to type
-                card.style.transform = `rotateY(${dx / 80}deg) rotateX(${-dy / 80}deg) scale3d(1.01, 1.01, 1.01)`;
-            };
-            card.onmouseleave = () => { card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`; };
+            let isTicking = false;
+            card.addEventListener('mousemove', e => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(() => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                        card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
+                        const xc = rect.width / 2; const yc = rect.height / 2;
+                        const dx = x - xc; const dy = y - yc;
+                        card.style.transform = `rotateY(${dx / 80}deg) rotateX(${-dy / 80}deg) scale3d(1.01, 1.01, 1.01)`;
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }, { passive: true });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
+            }, { passive: true });
         });
 
         const observer = new IntersectionObserver((entries) => {
@@ -197,55 +206,143 @@
         }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Canvas Physics Engine
+        // Physics Engine: Math Snow with Bounding Box Collisions (Optimized with Typed Arrays)
         const canvas = document.getElementById('math-physics');
         const ctx = canvas.getContext('2d');
-        let width, height, particles = [], cardRects = [];
-        const symbols = ['∫','∑','√','∆','∞','≈','π','θ','Ω','α','β','γ','λ','μ','ρ','σ','φ','ω', 'x', 'y', '='];
+        let width, height, cardRects = [];
 
-        function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; updateRects(); }
+        const resizeObserver = new ResizeObserver(() => updateRects());
+        document.querySelectorAll('.spotlight-card, .btn-glow').forEach(el => resizeObserver.observe(el));
+
         function updateRects() {
-            cardRects = Array.from(document.querySelectorAll('.spotlight-card')).map(card => {
+            const scrollY = window.scrollY;
+            cardRects = Array.from(document.querySelectorAll('.spotlight-card, .btn-glow')).map(card => {
                 const rect = card.getBoundingClientRect();
-                return { top: rect.top + window.scrollY, bottom: rect.bottom + window.scrollY, left: rect.left, right: rect.right };
+                return {
+                    top: rect.top + scrollY,
+                    bottom: rect.bottom + scrollY,
+                    left: rect.left,
+                    right: rect.right
+                };
             });
         }
-        window.addEventListener('resize', resizeCanvas);
         
-        class MathParticle {
-            constructor() { this.spawn(true); }
-            spawn(randomY = false) {
-                const zone = width * 0.15;
-                this.x = Math.random() > 0.5 ? Math.random() * zone : width - (Math.random() * zone);
-                this.y = randomY ? Math.random() * (height + window.scrollY) : window.scrollY - 50 - Math.random() * 100;
-                this.size = Math.random() * 14 + 10;
-                this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
-                this.vx = (Math.random() - 0.5) * 1.5; 
-                this.vy = Math.random() * 2 + 1; 
-                this.gravity = 0.03 + Math.random() * 0.05; 
-                this.elasticity = 0.4 + Math.random() * 0.3; 
-                this.rot = Math.random() * Math.PI * 2;
-                this.rotSpeed = (Math.random() - 0.5) * 0.05;
-            }
-            update() {
-                this.vy += this.gravity; this.x += this.vx; this.y += this.vy; this.rot += this.rotSpeed;
-                for (let i = 0; i < cardRects.length; i++) {
-                    let rect = cardRects[i];
-                    if (this.x > rect.left && this.x < rect.right && this.y + this.size > rect.top && this.y < rect.bottom) {
-                        if (this.vy > 0) { this.y = rect.top - this.size; this.vy *= -this.elasticity; this.vx += (Math.random() - 0.5) * 2; this.rotSpeed += (Math.random() - 0.5) * 0.2; }
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            updateRects();
+        }
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+
+        const maxParticles = 150;
+        const pX = new Float32Array(maxParticles);
+        const pY = new Float32Array(maxParticles);
+        const pVx = new Float32Array(maxParticles);
+        const pVy = new Float32Array(maxParticles);
+        const pBaseVy = new Float32Array(maxParticles);
+        const pSize = new Float32Array(maxParticles);
+        const pPhase = new Float32Array(maxParticles);
+        const pElasticity = new Float32Array(maxParticles);
+        const pRot = new Float32Array(maxParticles);
+        const pRotSpeed = new Float32Array(maxParticles);
+        const pIsBouncing = new Uint8Array(maxParticles);
+        const pSymbolIdx = new Uint8Array(maxParticles);
+
+        const symbols = ['∫','∑','√','∆','∞','≈','π','θ','Ω','α','β','γ','λ','μ','ρ','σ','φ','ω', 'x', 'y', '='];
+
+        const preRenderedSymbols = symbols.map(symbol => {
+            const size = 30;
+            const c = (typeof OffscreenCanvas !== 'undefined') ? new OffscreenCanvas(size * 2, size * 2) : document.createElement('canvas');
+            if (c.width !== size * 2) { c.width = size * 2; c.height = size * 2; }
+            const cx = c.getContext('2d');
+            cx.fillStyle = 'rgba(34, 211, 238, 1)';
+            cx.font = `${size}px monospace`;
+            cx.textAlign = 'center';
+            cx.textBaseline = 'middle';
+            cx.fillText(symbol, size, size);
+            return c;
+        });
+
+        function spawnParticle(i, randomY = false) {
+            pX[i] = Math.random() > 0.5 ? Math.random() * (width * 0.15) : width - (Math.random() * (width * 0.15));
+            pY[i] = randomY ? (window.scrollY + Math.random() * height) : (window.scrollY - 50 - Math.random() * 100);
+            pSize[i] = Math.random() * 12 + 10;
+            pSymbolIdx[i] = Math.floor(Math.random() * symbols.length);
+
+            pBaseVy[i] = Math.random() * 0.8 + 0.8;
+            pVy[i] = pBaseVy[i];
+            pVx[i] = (Math.random() - 0.5) * 0.5;
+            pPhase[i] = Math.random() * Math.PI * 2;
+
+            pElasticity[i] = 0.5 + Math.random() * 0.3;
+            pRot[i] = Math.random() * Math.PI * 2;
+            pRotSpeed[i] = (Math.random() - 0.5) * 0.02;
+            pIsBouncing[i] = 0;
+        }
+
+        resizeCanvas();
+        for (let i = 0; i < maxParticles; i++) spawnParticle(i, true);
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            const scrollY = window.scrollY;
+            const scrollBottom = scrollY + height + 100;
+            const numRects = cardRects.length;
+
+            for (let i = 0; i < maxParticles; i++) {
+                if (pIsBouncing[i] === 0) {
+                    pPhase[i] += 0.02;
+                    pX[i] += Math.sin(pPhase[i]) * 0.5 + pVx[i];
+                } else {
+                    pX[i] += pVx[i];
+                    pVy[i] += 0.1;
+                }
+
+                pY[i] += pVy[i];
+                pRot[i] += pRotSpeed[i];
+
+                let hit = false;
+                const px = pX[i], py = pY[i], psize = pSize[i];
+
+                for (let j = 0; j < numRects; j++) {
+                    const r = cardRects[j];
+                    if (px > r.left && px < r.right && py + psize > r.top && py < r.bottom) {
+                        if (pVy[i] > 0 && py < r.top + 20) {
+                            pY[i] = r.top - psize;
+                            pVy[i] *= -pElasticity[i];
+                            pVx[i] = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2 + 1);
+                            pIsBouncing[i] = 1;
+                            hit = true;
+                            break;
+                        }
                     }
                 }
-                if (this.y > window.scrollY + height + 100 || this.x < -50 || this.x > width + 50) this.spawn();
+
+                if (!hit && pVy[i] > pBaseVy[i]) {
+                    pVy[i] *= 0.95;
+                    if (Math.abs(pVy[i] - pBaseVy[i]) < 0.1) {
+                        pIsBouncing[i] = 0;
+                        pVy[i] = pBaseVy[i];
+                    }
+                }
+
+                if (pY[i] > scrollBottom || pX[i] < -50 || pX[i] > width + 50) {
+                    spawnParticle(i);
+                }
+
+                const drawY = pY[i] - scrollY;
+                const sizeRatio = pSize[i] / 30;
+
+                ctx.setTransform(sizeRatio, 0, 0, sizeRatio, pX[i], drawY);
+                ctx.rotate(pRot[i]);
+                ctx.globalAlpha = pSize[i] / 30;
+                ctx.drawImage(preRenderedSymbols[pSymbolIdx[i]], -30, -30);
             }
-            draw() {
-                ctx.save(); ctx.translate(this.x, this.y - window.scrollY); ctx.rotate(this.rot);
-                ctx.fillStyle = `rgba(34, 211, 238, ${this.size / 40})`; ctx.font = `${this.size}px monospace`;
-                ctx.fillText(this.symbol, 0, 0); ctx.restore();
-            }
+
+            ctx.resetTransform();
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(animate);
         }
-        resizeCanvas();
-        for (let i = 0; i < 150; i++) particles.push(new MathParticle());
-        function animate() { ctx.clearRect(0, 0, width, height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
         animate();
     </script>
 </body>

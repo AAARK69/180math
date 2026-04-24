@@ -16,7 +16,15 @@
         .cinematic-noise {
             position: fixed; inset: 0; z-index: 9999; pointer-events: none;
             opacity: 0.05; mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            /*
+           ASSET OPTIMIZATION STRATEGY:
+           - Noise: The SVG fractalNoise is computationally expensive (high paint cost).
+             For production, pre-render this into a small (e.g. 200x200), looping WebP or PNG texture tile.
+             We reduced numOctaves to 1 here as a stopgap for better performance until asset swap.
+           - Images: Any standard image tags (e.g., logo) should use modern formats (WebP/AVIF),
+             include width/height attributes, and use `loading="lazy"` if below the fold.
+        */
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* 2. Global Lighting (Gold Tint) */
@@ -49,6 +57,7 @@
             box-shadow: 20px 30px 60px rgba(0, 0, 0, 0.4), -5px -5px 20px rgba(229, 190, 133, 0.03);
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
             transform-style: preserve-3d; border-radius: 1.5rem;
+            will-change: transform; backface-visibility: hidden;
         }
         
         .spotlight-card > * { transform: translateZ(30px); }
@@ -67,7 +76,7 @@
         .link-hover:hover { color: #ffffff; text-shadow: 0 0 12px rgba(229,190,133,.6); }
 
         /* 6. Scroll Reveals */
-        .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; backface-visibility: hidden; }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
@@ -350,16 +359,7 @@
 
     <script>
         // 1. Scroll Parallax Binder
-        let scrollTicking = false;
-        window.addEventListener('scroll', () => {
-            if (!scrollTicking) {
-                window.requestAnimationFrame(() => {
-                    document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
-                    scrollTicking = false;
-                });
-                scrollTicking = true;
-            }
-        }, { passive: true });
+        window.addEventListener('scroll', () => { document.documentElement.style.setProperty('--scroll', window.scrollY + 'px'); });
 
         // 2. Decipher Text Engine
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
@@ -377,15 +377,25 @@
         
         // 3. 3D Spotlight Tilt Engine
         document.querySelectorAll(".spotlight-card").forEach(card => {
-            card.onmousemove = e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
-                const xc = rect.width / 2; const yc = rect.height / 2;
-                const dx = x - xc; const dy = y - yc;
-                card.style.transform = `rotateY(${dx / 40}deg) rotateX(${-dy / 40}deg) scale3d(1.02, 1.02, 1.02)`;
-            };
-            card.onmouseleave = () => { card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`; };
+            let isTicking = false;
+            card.addEventListener('mousemove', e => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(() => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                        card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
+                        const xc = rect.width / 2; const yc = rect.height / 2;
+                        const dx = x - xc; const dy = y - yc;
+                        card.style.transform = `rotateY(${dx / 40}deg) rotateX(${-dy / 40}deg) scale3d(1.02, 1.02, 1.02)`;
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }, { passive: true });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
+            }, { passive: true });
         });
 
         // 4. Scroll Reveals
@@ -402,120 +412,141 @@
         }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 5. Physics Engine: Math Snow with Bounding Box Collisions
+        // Physics Engine: Math Snow with Bounding Box Collisions (Optimized with Typed Arrays)
         const canvas = document.getElementById('math-physics');
         const ctx = canvas.getContext('2d');
-        let width, height, particles = [], cardRects = [];
-        const symbols = ['∫','∑','√','∆','∞','≈','π','θ','Ω','α','β','γ','λ','μ','ρ','σ','φ','ω', 'x', 'y', '='];
+        let width, height, cardRects = [];
 
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            updateRects();
-        }
+        const resizeObserver = new ResizeObserver(() => updateRects());
+        document.querySelectorAll('.spotlight-card, .btn-glow').forEach(el => resizeObserver.observe(el));
         
         function updateRects() {
+            const scrollY = window.scrollY;
             cardRects = Array.from(document.querySelectorAll('.spotlight-card, .btn-glow')).map(card => {
                 const rect = card.getBoundingClientRect();
                 return {
-                    top: rect.top + window.scrollY,
-                    bottom: rect.bottom + window.scrollY,
+                    top: rect.top + scrollY,
+                    bottom: rect.bottom + scrollY,
                     left: rect.left,
                     right: rect.right
                 };
             });
         }
 
-        window.addEventListener('resize', resizeCanvas);
-        
-        class MathParticle {
-            constructor() { this.spawn(true); }
-            
-            spawn(randomY = false) {
-                // Spawn everywhere across the width
-                this.x = Math.random() * width; 
-                this.y = randomY ? (window.scrollY + Math.random() * height) : (window.scrollY - 50 - Math.random() * 100);
-                
-                this.size = Math.random() * 12 + 10; 
-                this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
-                
-                // Snow physics
-                this.baseVy = Math.random() * 0.8 + 0.8; 
-                this.vy = this.baseVy;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.phase = Math.random() * Math.PI * 2;
-                
-                this.elasticity = 0.5 + Math.random() * 0.3; // Bounce retention
-                this.rot = Math.random() * Math.PI * 2;
-                this.rotSpeed = (Math.random() - 0.5) * 0.02; 
-                this.isBouncing = false;
-            }
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            updateRects();
+        }
+        window.addEventListener('resize', resizeCanvas, { passive: true });
 
-            update() {
-                // Gently sway if falling normally, otherwise apply gravity if bouncing
-                if (!this.isBouncing) {
-                    this.phase += 0.02;
-                    this.x += Math.sin(this.phase) * 0.5 + this.vx;
+        const maxParticles = 150;
+        const pX = new Float32Array(maxParticles);
+        const pY = new Float32Array(maxParticles);
+        const pVx = new Float32Array(maxParticles);
+        const pVy = new Float32Array(maxParticles);
+        const pBaseVy = new Float32Array(maxParticles);
+        const pSize = new Float32Array(maxParticles);
+        const pPhase = new Float32Array(maxParticles);
+        const pElasticity = new Float32Array(maxParticles);
+        const pRot = new Float32Array(maxParticles);
+        const pRotSpeed = new Float32Array(maxParticles);
+        const pIsBouncing = new Uint8Array(maxParticles);
+        const pSymbolIdx = new Uint8Array(maxParticles);
+
+        const symbols = ['∫','∑','√','∆','∞','≈','π','θ','Ω','α','β','γ','λ','μ','ρ','σ','φ','ω', 'x', 'y', '='];
+        
+        const preRenderedSymbols = symbols.map(symbol => {
+            const size = 30;
+            const c = (typeof OffscreenCanvas !== 'undefined') ? new OffscreenCanvas(size * 2, size * 2) : document.createElement('canvas');
+            if (c.width !== size * 2) { c.width = size * 2; c.height = size * 2; }
+            const cx = c.getContext('2d');
+            cx.fillStyle = 'rgba(229, 190, 133, 1)';
+            cx.font = `${size}px monospace`;
+            cx.textAlign = 'center';
+            cx.textBaseline = 'middle';
+            cx.fillText(symbol, size, size);
+            return c;
+        });
+
+        function spawnParticle(i, randomY = false) {
+            pX[i] = Math.random() * width;
+            pY[i] = randomY ? (window.scrollY + Math.random() * height) : (window.scrollY - 50 - Math.random() * 100);
+            pSize[i] = Math.random() * 12 + 10;
+            pSymbolIdx[i] = Math.floor(Math.random() * symbols.length);
+            
+            pBaseVy[i] = Math.random() * 0.8 + 0.8;
+            pVy[i] = pBaseVy[i];
+            pVx[i] = (Math.random() - 0.5) * 0.5;
+            pPhase[i] = Math.random() * Math.PI * 2;
+
+            pElasticity[i] = 0.5 + Math.random() * 0.3;
+            pRot[i] = Math.random() * Math.PI * 2;
+            pRotSpeed[i] = (Math.random() - 0.5) * 0.02;
+            pIsBouncing[i] = 0;
+        }
+
+        resizeCanvas();
+        for (let i = 0; i < maxParticles; i++) spawnParticle(i, true);
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            const scrollY = window.scrollY;
+            const scrollBottom = scrollY + height + 100;
+            const numRects = cardRects.length;
+
+            for (let i = 0; i < maxParticles; i++) {
+                if (pIsBouncing[i] === 0) {
+                    pPhase[i] += 0.02;
+                    pX[i] += Math.sin(pPhase[i]) * 0.5 + pVx[i];
                 } else {
-                    this.x += this.vx;
-                    this.vy += 0.1; // Pull back down after a bounce
+                    pX[i] += pVx[i];
+                    pVy[i] += 0.1;
                 }
                 
-                this.y += this.vy;
-                this.rot += this.rotSpeed;
+                pY[i] += pVy[i];
+                pRot[i] += pRotSpeed[i];
 
-                // Collision Detection with Cached Card Rectangles
                 let hit = false;
-                for (let i = 0; i < cardRects.length; i++) {
-                    let rect = cardRects[i];
-                    if (this.x > rect.left && this.x < rect.right && this.y + this.size > rect.top && this.y < rect.bottom) {
-                        
-                        // Hit the top of the card
-                        if (this.vy > 0 && this.y < rect.top + 20) {
-                            this.y = rect.top - this.size; 
-                            this.vy *= -this.elasticity; 
-                            // Scatter left or right off the card
-                            this.vx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2 + 1); 
-                            this.isBouncing = true;
+                const px = pX[i], py = pY[i], psize = pSize[i];
+
+                for (let j = 0; j < numRects; j++) {
+                    const r = cardRects[j];
+                    if (px > r.left && px < r.right && py + psize > r.top && py < r.bottom) {
+                        if (pVy[i] > 0 && py < r.top + 20) {
+                            pY[i] = r.top - psize;
+                            pVy[i] *= -pElasticity[i];
+                            pVx[i] = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2 + 1);
+                            pIsBouncing[i] = 1;
                             hit = true;
+                            break;
                         }
                     }
                 }
 
-                // Smoothly return to falling state if we were bouncing and are falling again
-                if (!hit && this.vy > this.baseVy) {
-                    this.vy *= 0.95; // Fake air resistance
-                    if(Math.abs(this.vy - this.baseVy) < 0.1) {
-                        this.isBouncing = false;
-                        this.vy = this.baseVy;
+                if (!hit && pVy[i] > pBaseVy[i]) {
+                    pVy[i] *= 0.95;
+                    if (Math.abs(pVy[i] - pBaseVy[i]) < 0.1) {
+                        pIsBouncing[i] = 0;
+                        pVy[i] = pBaseVy[i];
                     }
                 }
 
-                // Despawn if way off screen
-                if (this.y > window.scrollY + height + 100 || this.x < -50 || this.x > width + 50) {
-                    this.spawn();
+                if (pY[i] > scrollBottom || pX[i] < -50 || pX[i] > width + 50) {
+                    spawnParticle(i);
                 }
+
+                const drawY = pY[i] - scrollY;
+                const sizeRatio = pSize[i] / 30;
+
+                ctx.setTransform(sizeRatio, 0, 0, sizeRatio, pX[i], drawY);
+                ctx.rotate(pRot[i]);
+                ctx.globalAlpha = pSize[i] / 30;
+                ctx.drawImage(preRenderedSymbols[pSymbolIdx[i]], -30, -30);
             }
 
-            draw() {
-                ctx.save();
-                // Map to document coordinates
-                ctx.translate(this.x, this.y - window.scrollY); 
-                ctx.rotate(this.rot);
-                ctx.fillStyle = `rgba(229, 190, 133, ${this.size / 30})`; 
-                ctx.font = `${this.size}px monospace`;
-                ctx.fillText(this.symbol, 0, 0);
-                ctx.restore();
-            }
-        }
-
-        resizeCanvas();
-        particles = [];
-        for (let i = 0; i < 150; i++) particles.push(new MathParticle());
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(); });
+            ctx.resetTransform();
+            ctx.globalAlpha = 1;
             requestAnimationFrame(animate);
         }
         animate();
