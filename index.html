@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>180 Math | Premier Tutoring Demo</title>
+    <title>180 Math | Premier Math Tutoring</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
-        :root { --glow-color: rgba(34, 211, 238, 0.4); }
 
-        /* 1. Grainy Noise Overlay (The "Premium" Texture) */
+        /* 1. Grainy Noise Overlay */
         .bg-grid::before {
             content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none;
             opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
+        /* Space Grid Background */
         .bg-grid {
             background-color: #070b19;
             background-image: 
@@ -23,89 +23,309 @@
             background-size: 40px 40px;
         }
 
-        /* 2. Spotlight Border Logic */
+        /* 2. Spotlight Border & 3D Tilt Logic */
         .spotlight-card {
             position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: transform 0.3s ease-out;
             transform-style: preserve-3d;
         }
         .spotlight-card::before {
             content: ""; position: absolute; inset: -1px; z-index: -1;
-            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.25), transparent 40%);
+            background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.3), transparent 40%);
             border-radius: inherit;
         }
+
+        /* Standard Card Hover (for smaller elements like FAQs) */
+        .card-hover { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease; }
+        .card-hover:hover { transform: translateY(-4px); border-color: rgba(34,211,238,.4); box-shadow: 0 10px 30px -10px rgba(34,211,238,.15); background: rgba(255,255,255,.05); }
 
         /* 3. Reveal Animations */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.15, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
 
-        .btn-glow {
-            position: relative; overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .btn-glow:hover {
-            box-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
-            transform: scale(1.05);
-        }
+        /* Button Glow Physics */
+        .btn-glow { position: relative; transition: all 0.3s ease; }
+        .btn-glow:hover { box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); transform: translateY(-2px); }
+        
+        .link-hover { transition: color .2s ease, text-shadow .2s ease; }
+        .link-hover:hover { color: #22d3ee; text-shadow: 0 0 8px rgba(34,211,238,.4); }
     </style>
 </head>
 <body class="bg-grid text-gray-200 font-sans relative overflow-x-hidden">
 
-    <canvas id="tech-canvas" class="fixed inset-0 z-[-1] pointer-events-none opacity-40"></canvas>
+    <canvas id="tech-canvas" class="fixed inset-0 z-[-1] pointer-events-none opacity-50"></canvas>
 
-    <nav class="bg-[#0C0B33]/80 backdrop-blur-xl fixed w-full z-50 top-0 border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <img src="logo.png" alt="180 Math" class="h-10 w-auto brightness-110">
-            <div class="hidden md:flex space-x-8 text-xs uppercase tracking-widest font-bold">
-                <a href="#offering" class="hover:text-cyan-400 transition-colors">Program</a>
-                <a href="#pricing" class="hover:text-cyan-400 transition-colors">Pricing</a>
-                <a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a>
+    <nav class="bg-[#0C0B33]/80 backdrop-blur-xl shadow-lg fixed w-full z-50 top-0 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="logo.png" alt="180 Math Logo" class="h-12 w-auto relative z-10">
+            </a>
+            <div class="hidden md:flex space-x-6 text-sm font-bold uppercase tracking-wider">
+                <a href="#offering" class="text-gray-300 link-hover">Program</a>
+                <a href="#pricing" class="text-gray-300 link-hover">Pricing</a>
+                <a href="#reviews" class="text-gray-300 link-hover">Reviews</a>
+                <a href="#faq" class="text-gray-300 link-hover">FAQ</a>
+                <a href="#calendar" class="text-gray-300 link-hover">Calendar</a>
             </div>
         </div>
     </nav>
 
-    <section id="offering" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative" style="background: radial-gradient(circle at 50% 30%, #0C0B33 0%, #070b19 70%);">
-        <div class="reveal active">
-            <img src="logo.png" alt="Banner" class="w-full max-w-xl mb-12 drop-shadow-[0_0_50px_rgba(12,11,51,0.8)]">
-            <p class="text-xl md:text-2xl text-cyan-100/60 max-w-2xl mx-auto leading-relaxed font-light tracking-wide decipher-text">
-                Turning grades around through foundational mastery.
+    <section id="offering" class="min-h-[100vh] flex flex-col justify-center items-center text-center px-4 relative pt-20 pb-24" style="background: radial-gradient(circle at 50% 30%, #0C0B33 0%, transparent 80%);">
+        <div class="max-w-4xl w-full flex flex-col items-center z-10 reveal active">
+            <img src="logo.png" alt="180 Math Logo Banner" class="w-full max-w-lg md:max-w-2xl mb-12 object-contain drop-shadow-[0_0_40px_rgba(12,11,51,0.8)]">
+            <p class="text-xl md:text-2xl text-cyan-100/80 max-w-2xl mx-auto leading-relaxed font-light tracking-wide decipher-text">
+                Comprehensive tutoring designed to turn your grades around. From foundational algebra to AP pre-calculus, we build confidence and competence.
             </p>
         </div>
-        <div class="absolute bottom-20 reveal active delay-500">
-            <a href="#pricing" class="btn-glow bg-white text-[#070b19] px-12 py-4 rounded-full font-black uppercase tracking-tighter text-sm">
-                Initialize Enrollment
-            </a>
+        <div class="absolute bottom-12 w-full flex justify-center z-10 reveal delay-200 active">
+            <a href="#pricing" class="bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] px-10 py-4 rounded-full font-black uppercase tracking-wider text-sm btn-glow">Get Started</a>
         </div>
     </section>
 
-    <section id="pricing" class="py-32 px-6 max-w-6xl mx-auto relative z-10">
-        <h2 class="text-4xl font-black text-white mb-20 text-center tracking-tighter reveal">Tiered Education Modules</h2>
-        <div class="grid md:grid-cols-2 gap-12">
-            <div class="spotlight-card p-10 rounded-3xl reveal backdrop-blur-md">
-                <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-2">Standard Protocol</h3>
-                <div class="text-4xl font-bold text-white mb-6">Group Cohorts</div>
-                <div class="text-5xl font-black mb-8">$250<span class="text-lg font-normal text-gray-500">/mo</span></div>
-                <ul class="space-y-4 mb-10 text-gray-400 text-sm">
-                    <li class="flex items-center"><span class="w-1 h-1 bg-cyan-400 mr-3"></span>Peer Collaborative Environment</li>
-                    <li class="flex items-center"><span class="w-1 h-1 bg-cyan-400 mr-3"></span>Weekly Recursive Reviews</li>
-                </ul>
-                <button class="w-full py-4 border border-white/10 rounded-xl font-bold hover:bg-white hover:text-black transition-all">Select Tier</button>
+    <section id="reviews" class="py-24 px-4 relative z-10 border-t border-white/5 bg-white/[0.01] backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-black text-white mb-12 tracking-tighter reveal decipher-text">What Our Learners Say</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                <div class="spotlight-card p-8 rounded-3xl shadow-lg reveal">
+                    <p class="italic text-gray-300 mb-6 leading-relaxed">"INSERT YOUR FIRST TESTIMONIAL HERE. This completely changed how I approach problem-solving."</p>
+                    <p class="font-bold text-[#22d3ee] uppercase tracking-widest text-xs">- Student Name</p>
+                </div>
+                <div class="spotlight-card p-8 rounded-3xl shadow-lg reveal delay-100">
+                    <p class="italic text-gray-300 mb-6 leading-relaxed">"INSERT YOUR SECOND TESTIMONIAL HERE. The best investment in my education."</p>
+                    <p class="font-bold text-[#22d3ee] uppercase tracking-widest text-xs">- Student Name</p>
+                </div>
+                 <div class="spotlight-card p-8 rounded-3xl shadow-lg reveal delay-200">
+                    <p class="italic text-gray-300 mb-6 leading-relaxed">"INSERT YOUR THIRD TESTIMONIAL HERE. Clear, concise, and incredibly helpful."</p>
+                    <p class="font-bold text-[#22d3ee] uppercase tracking-widest text-xs">- Student Name</p>
+                </div>
             </div>
 
-            <div class="spotlight-card p-10 rounded-3xl reveal delay-100 backdrop-blur-md border-cyan-500/20">
-                <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-2">Priority Protocol</h3>
-                <div class="text-4xl font-bold text-white mb-6">Private 1-on-1</div>
-                <div class="text-5xl font-black mb-8 italic">Contact</div>
-                <ul class="space-y-4 mb-10 text-gray-400 text-sm">
-                    <li class="flex items-center"><span class="w-1 h-1 bg-cyan-400 mr-3"></span>Fully Personalized Curriculum</li>
-                    <li class="flex items-center"><span class="w-1 h-1 bg-cyan-400 mr-3"></span>Adaptive Scheduling</li>
-                </ul>
-                <button class="w-full py-4 bg-cyan-500 text-[#070b19] rounded-xl font-bold btn-glow">Request Access</button>
+            <h2 class="text-4xl font-black text-white mt-24 mb-12 tracking-tighter reveal decipher-text">What Our Parents Say</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                <div class="spotlight-card p-8 rounded-3xl shadow-lg reveal">
+                    <p class="italic text-gray-300 mb-6 leading-relaxed">"INSERT YOUR FIRST TESTIMONIAL HERE. This completely changed how I approach problem-solving."</p>
+                    <p class="font-bold text-[#a78bfa] uppercase tracking-widest text-xs">- Parent Name</p>
+                </div>
+                <div class="spotlight-card p-8 rounded-3xl shadow-lg reveal delay-100">
+                    <p class="italic text-gray-300 mb-6 leading-relaxed">"INSERT YOUR SECOND TESTIMONIAL HERE. The best investment in my education."</p>
+                    <p class="font-bold text-[#a78bfa] uppercase tracking-widest text-xs">- Parent Name</p>
+                </div>
+                 <div class="spotlight-card p-8 rounded-3xl shadow-lg reveal delay-200">
+                    <p class="italic text-gray-300 mb-6 leading-relaxed">"INSERT YOUR THIRD TESTIMONIAL HERE. Clear, concise, and incredibly helpful."</p>
+                    <p class="font-bold text-[#a78bfa] uppercase tracking-widest text-xs">- Parent Name</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <section id="pricing" class="py-32 px-6 max-w-6xl mx-auto text-center relative z-10">
+        <h2 class="text-4xl font-black text-white mb-20 tracking-tighter reveal decipher-text">Simple, Transparent Pricing</h2>
+        <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            
+            <div class="spotlight-card p-10 rounded-3xl flex flex-col justify-between reveal backdrop-blur-md">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Private 1-on-1</h3>
+                    <p class="text-2xl font-extrabold text-[#22d3ee] mb-8">Call for Price and Favorable schedules</p>
+                    <ul class="text-left space-y-4 mb-10 text-gray-300">
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mr-3"></span> Highly personalized curriculum</li>
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mr-3"></span> Dedicated homework assistance</li>
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mr-3"></span> Intensive exam prep</li>
+                    </ul>
+                </div>
+                <a href="pricing.html#private" class="block w-full py-4 border border-white/10 rounded-xl font-bold hover:bg-white hover:text-[#070b19] transition-all text-[#22d3ee]">Check Availability</a>
+            </div>
+            
+            <div class="spotlight-card border-[#22d3ee]/30 p-10 rounded-3xl flex flex-col justify-between reveal delay-100 backdrop-blur-md">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Group Cohorts</h3>
+                    <p class="text-4xl font-black text-white mb-8">From $250<span class="text-lg font-normal text-gray-500">/mo</span></p>
+                    <ul class="text-left space-y-4 mb-10 text-gray-300">
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mr-3"></span> Collaborative peer learning</li>
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mr-3"></span> Weekly core concept reviews</li>
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mr-3"></span> Maximum 6 students per Cohort</li>
+                    </ul>
+                </div>
+                <a href="pricing.html#group" class="block w-full bg-gradient-to-r from-[#0ea5e9] to-[#22d3ee] text-[#070b19] font-black uppercase tracking-wider py-4 rounded-xl btn-glow">View Options</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="calendar" class="bg-white/[0.02] py-24 px-4 border-y border-white/5 backdrop-blur-sm relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-black text-white mb-12 tracking-tighter reveal decipher-text">Schedule & Holidays</h2>
+            <div class="spotlight-card p-10 rounded-3xl text-left reveal">
+                <h4 class="text-xl font-bold text-white mb-4 border-b border-white/10 pb-4 uppercase tracking-widest text-[#22d3ee]">Aligned with South Windsor Public Schools</h4>
+                <p class="text-gray-300 mb-6 leading-relaxed text-lg">Our tutoring schedule is fully aligned with the <strong>South Windsor Public Schools (SWPS) academic calendar</strong>. We observe all major SWPS holidays and will work with families for one-off holidays.</p>
+                <div>
+                    <a href="#faq" class="text-[#22d3ee] underline underline-offset-4 font-semibold link-hover">View Holiday Details in FAQ &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-32 px-4 max-w-4xl mx-auto relative z-10">
+        <h2 class="text-4xl font-black text-white mb-16 text-center tracking-tighter reveal decipher-text">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">What subjects do you teach?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">At 180Math, we teach Mathematics starting from Elementary (Grade 3 and above) to High School (up to AP Pre-Calculus).</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">What is offered as part of the tutoring service?</summary>
+                <div class="mt-5 text-gray-300 text-sm space-y-8">
+                    <p class="italic text-gray-400">Following information is for both: Group cohorts as well as Private lessons.</p>
+                    
+                    <div class="bg-black/20 p-5 rounded-xl border border-white/5">
+                        <strong class="text-white text-base uppercase tracking-wider text-[#22d3ee]">For Academic Curriculum:</strong>
+                        <ul class="list-disc pl-5 mt-4 space-y-2 text-gray-300">
+                            <li>36 weeks of lessons</li>
+                            <li>2 Hour lessons each week</li>
+                            <li>Concept oriented learning</li>
+                            <li>Test/Quiz Preparation</li>
+                            <li>Concepts for homework help</li>
+                            <li>Extra help for students if need be*</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-black/20 p-5 rounded-xl border border-white/5">
+                        <strong class="text-white text-base uppercase tracking-wider text-[#22d3ee]">For SAT Preparation:</strong>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-white/5 p-5 rounded-xl border border-white/10 shadow-inner">
+                                <span class="font-black text-white block mb-2 text-lg">Short Term Prep</span>
+                                <span class="text-xs text-[#22d3ee] font-bold block mb-4 uppercase tracking-wider">Summer Bootcamp: 4 Weeks</span>
+                                <ul class="list-none space-y-2 mb-4">
+                                    <li><span class="text-[#22d3ee] mr-2">⏱</span> Timeline: 4 weeks</li>
+                                    <li><span class="text-[#22d3ee] mr-2">📝</span> 8 Full Length Tests</li>
+                                    <li><span class="text-[#22d3ee] mr-2">📅</span> Weekly: 4 hour lessons</li>
+                                </ul>
+                                <span class="text-xs text-gray-400 uppercase font-bold border-b border-white/10 pb-1 block mb-2">2 Batches to choose from:</span>
+                                <ul class="list-disc pl-5 text-gray-300 text-xs space-y-1">
+                                    <li>Batch 1: June 22 - July 17th 2026</li>
+                                    <li>Batch 2: August 3rd - August 28th 2026</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/5 p-5 rounded-xl border border-white/10 shadow-inner">
+                                <span class="font-black text-white block mb-2 text-lg">Long Term Prep</span>
+                                <span class="text-xs text-[#22d3ee] font-bold block mb-4 uppercase tracking-wider">8 Weeks</span>
+                                <ul class="list-none space-y-2 mb-4">
+                                    <li><span class="text-[#22d3ee] mr-2">⏱</span> Timeline: 8 weeks</li>
+                                    <li><span class="text-[#22d3ee] mr-2">📝</span> 8 Full Length Tests</li>
+                                    <li><span class="text-[#22d3ee] mr-2">📅</span> Weekly: 2 hour lessons</li>
+                                </ul>
+                                <span class="text-xs text-gray-400 uppercase font-bold border-b border-white/10 pb-1 block mb-2">2 Batches to choose from:</span>
+                                <ul class="list-disc pl-5 text-gray-300 text-xs space-y-1">
+                                    <li>Batch 1: August 31st - October 23rd 2026</li>
+                                    <li>Batch 2: Oct 26th 2026 - Jan 28th 2027 **</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-white/5 p-5 rounded-xl border border-white/10 shadow-inner">
+                            <span class="font-black text-white block mb-2 text-lg">Long Term Prep (Monthly)</span>
+                            <ul class="list-none space-y-2 mt-4">
+                                <li><span class="text-[#22d3ee] mr-2">⏱</span> Timeline: Until exam date</li>
+                                <li><span class="text-[#22d3ee] mr-2">📝</span> Unlimited Full Length Tests (1 test paper a week)</li>
+                                <li><span class="text-[#22d3ee] mr-2">📅</span> Weekly: 2 hour lessons</li>
+                                <li><span class="text-[#22d3ee] mr-2">🚀</span> Start anytime</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">How big is the class size in a group cohort?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">There would be a maximum of 6 Students in each batch. Small batches help the students stay focussed and get individualized attention.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">Do you offer homework help?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">Challenging questions are always welcome in the class and benefit all students. However, students are expected to try solving their homework at home before requesting help in the class. Their attempted work, even if wrong, identifies the exact concept they need coaching on.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">Do you assign homework?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">Yes, homework is assigned weekly, either via textbook problems or Deltamath. Students are also encouraged to keep practicing multiplication tables 1 through 20 every week to help speed up their mental calculations. Parents are accountable to make sure their child completes the work on time and satisfactorily. A separate book for homework is requested.</p>
+            </details>
+            
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">What is your Group Cohort pricing?</summary>
+                <div class="mt-6 text-gray-300">
+                    <div class="overflow-x-auto bg-black/20 rounded-xl p-4 border border-white/5">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-white/20 text-xs uppercase tracking-widest text-[#22d3ee]">
+                                    <th class="py-3 font-bold pl-2">Program</th>
+                                    <th class="py-3 font-bold">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-4 pl-2 font-semibold text-white">Elementary</td><td class="py-4 text-[#22d3ee] font-bold">$250/mo</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-4 pl-2 font-semibold text-white">Middle School</td><td class="py-4 text-[#22d3ee] font-bold">$300/mo</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-4 pl-2 font-semibold text-white">High School</td><td class="py-4 text-[#22d3ee] font-bold">$350/mo</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-4 pl-2 font-semibold text-white">SAT - Short Term - Summer Bootcamp (4 weeks)</td><td class="py-4 text-[#22d3ee] font-bold">$800</td></tr>
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition"><td class="py-4 pl-2 font-semibold text-white">SAT - Long Term - 8 weeks</td><td class="py-4 text-[#22d3ee] font-bold">$800</td></tr>
+                                <tr class="hover:bg-white/5 transition"><td class="py-4 pl-2 font-semibold text-white">SAT - Long Term - Monthly</td><td class="py-4 text-[#22d3ee] font-bold">$400/mo</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="font-bold text-white text-lg mt-6">Private 1x1 Tutoring: <span class="text-[#22d3ee] font-normal italic">Call for Price</span></p>
+                </div>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">When are the fees due?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">Fees are expected to be paid by 5th of every month.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">Will fees be prorated for the month of June since it has only two working weeks?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">Yes. The June fees will be prorated, and the adjustment will be applied in April 2027, based on the official last day of the school year.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">Are the fees prorated if my child is absent for a session?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">No, fees are not prorated for student absences, as the class is still conducted for the rest of the group. If a student misses a session, the teacher will provide all materials covered—such as whiteboard notes, topics reviewed, and instructional videos. The student will also receive additional support in the following class to help them catch up.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">Are the fees prorated if the teacher cancels a session?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">Standard monthly fees are calculated with the understanding that up to two emergency teacher cancellations may occur during the academic year. If additional cancellations happen for any reason, every effort will be made to schedule a makeup class. If a makeup session cannot be arranged, the fees will be prorated in the following month.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">The school calendar shows 42–43 weeks. Why are students receiving 36 weeks of lessons?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">The school year includes 42 academic weeks, but 4 holiday weeks*** and 2 emergency teacher-cancellation weeks are already accounted for in the annual schedule. After excluding these six weeks, students receive 36 weeks of instruction.<br><br>If the school board extends the academic year by an additional week, we will be notified around April 2027, and class schedules will be extended accordingly.</p>
+            </details>
+
+            <details class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 cursor-pointer group card-hover reveal">
+                <summary class="font-bold text-lg text-white outline-none link-hover">Other than the 4 weeks mentioned, do students get additional holidays?</summary>
+                <p class="mt-4 text-gray-300 leading-relaxed">Currently, we follow the South Windsor Public School calendar. For Holidays falling on a weekday, such as Diwali, Holi, Presidents Day etc., parents will be consulted if a Holiday is needed. We will go with the majority. Fees will be prorated in the following month if the class is cancelled on a holiday.</p>
+            </details>
+
+        </div>
+
+        <div class="mt-16 p-8 bg-black/20 border border-white/5 rounded-3xl text-sm text-gray-400 card-hover reveal shadow-inner">
+            <p class="mb-3"><strong class="text-[#22d3ee] font-bold">– *</strong> Extra lessons are charged at Private lesson rate.</p>
+            <p class="mb-3"><strong class="text-[#22d3ee] font-bold">– **</strong> No classes Thanksgiving week and Christmas Holidays.</p>
+            <p class="mb-3 font-bold text-white uppercase tracking-widest text-xs mt-6"><strong class="text-[#22d3ee]">– ***</strong> Holiday weeks with no lessons:</p>
+            <ul class="list-none pl-4 space-y-2 text-gray-400">
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full mr-3"></span> Thanksgiving week: November 23rd to November 27th 2027</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full mr-3"></span> Christmas Holidays: December 21st, 2026 to January 1st, 2027</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full mr-3"></span> Spring Break: April 12th - April 16th 2027</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="bg-[#04060e] text-gray-600 py-12 text-center border-t border-white/5 relative z-10">
+        <p>&copy; 2026 180 Math. All rights reserved.</p>
+    </footer>
 
     <script>
         // 1. Decipher Text Effect Engine
@@ -123,7 +343,7 @@
             }, 30);
         }
         
-        // 2. Spotlight & 3D Tilt Engine
+        // 2. Spotlight & 3D Tilt Engine for Cards
         document.querySelectorAll(".spotlight-card").forEach(card => {
             card.onmousemove = e => {
                 const rect = card.getBoundingClientRect();
@@ -132,30 +352,32 @@
                 card.style.setProperty("--mouse-x", `${x}px`);
                 card.style.setProperty("--mouse-y", `${y}px`);
                 
-                // Subtle 3D Tilt
                 const xc = rect.width / 2;
                 const yc = rect.height / 2;
                 const dx = x - xc;
                 const dy = y - yc;
-                card.style.transform = `rotateY(${dx / 20}deg) rotateX(${-dy / 20}deg)`;
+                card.style.transform = `rotateY(${dx / 30}deg) rotateX(${-dy / 30}deg) scale3d(1.02, 1.02, 1.02)`;
             };
             card.onmouseleave = () => {
-                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
             };
         });
 
-        // 3. Observer for Reveals
+        // 3. Observer for Scroll Reveals
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    if(entry.target.classList.contains('decipher-text')) scramble(entry.target);
+                    if(entry.target.classList.contains('decipher-text')) {
+                        scramble(entry.target);
+                        entry.target.classList.remove('decipher-text'); // Only run once
+                    }
                 }
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 4. Background Particles (Retained from previous build)
+        // 4. Background Canvas Particles
         const canvas = document.getElementById('tech-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
