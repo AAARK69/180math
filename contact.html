@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pricing Tiers | 180 Math</title>
+    <title>Contact Us | 180 Math</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --scroll: 0px; }
@@ -25,10 +25,10 @@
         .btn-glow:hover { box-shadow: 0 15px 30px rgba(229, 190, 133, 0.4), 0 5px 15px rgba(0,0,0,0.5); transform: translateY(-8px) translateZ(50px); }
         .link-hover { transition: color .2s ease, text-shadow .2s ease; }
         .link-hover:hover { color: #ffffff; text-shadow: 0 0 12px rgba(229,190,133,.6); }
+        input:focus, select:focus, textarea:focus { box-shadow: 0 0 20px rgba(229, 190, 133, 0.15); border-color: #E5BE85 !important; }
 
         .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
-        .delay-100 { transition-delay: 100ms; }
     </style>
 </head>
 <body class="font-sans relative overflow-x-hidden flex flex-col min-h-screen">
@@ -42,61 +42,47 @@
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center transform translateZ(0)">
             <a href="index.html" class="flex items-center"><img src="logo.png" alt="180 Math Logo" class="h-10 w-auto drop-shadow-md"></a>
             <div class="hidden md:flex space-x-8 text-xs uppercase tracking-widest font-bold">
-                <a href="index.html" class="text-[#E5BE85]/80 hover:text-white transition-colors link-hover">&larr; Back to Home</a>
+                <a href="pricing.html" class="text-[#E5BE85]/80 hover:text-white transition-colors link-hover">&larr; Back to Pricing</a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-40 pb-12 px-4 max-w-6xl mx-auto text-center relative z-10 reveal active perspective-container">
-        <h1 class="text-5xl font-black text-[#E5BE85] mb-6 tracking-tighter decipher-text drop-shadow-lg">Detailed Pricing Plans</h1>
-        <p class="text-xl text-[#E5BE85]/80 max-w-2xl mx-auto leading-relaxed font-light tracking-wide drop-shadow-md">Select the tier that matches your student's current grade level. All plans include customized curriculum alignment.</p>
-    </section>
+    <section class="flex-grow pt-40 pb-24 px-6 relative z-10 perspective-container">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12 reveal active">
+                <h1 class="text-5xl font-black text-[#E5BE85] mb-6 tracking-tighter decipher-text drop-shadow-lg">Initialize Contact</h1>
+                <p class="text-lg text-[#E5BE85]/80 leading-relaxed font-light tracking-wide drop-shadow-md">Enter your parameters below to request pricing, join a waitlist, or submit a query. We will process your request within 24 hours.</p>
+            </div>
 
-    <section id="group" class="py-12 px-6 max-w-6xl mx-auto relative z-10 perspective-container flex-grow">
-        <h2 class="text-3xl font-black text-[#E5BE85] mb-10 text-center border-b border-[#E5BE85]/10 pb-6 reveal tracking-tighter drop-shadow-md">Group Cohorts <span class="text-lg font-light text-[#E5BE85]/50 ml-2 tracking-normal">(Max 6 Students)</span></h2>
-        
-        <h3 class="text-xs font-bold text-[#E5BE85] uppercase tracking-widest mb-6 reveal drop-shadow-md">Academic Tutoring</h3>
-        <div class="grid md:grid-cols-3 gap-10 mb-20">
-            <div class="spotlight-card p-8 text-center flex flex-col justify-between reveal">
-                <div class="transform translateZ(20px)"><h4 class="text-lg font-bold text-[#E5BE85] mb-2 tracking-wide">Elementary</h4><p class="text-4xl font-black text-[#E5BE85] mb-8">$250<span class="text-sm font-light text-[#E5BE85]/60">/mo</span></p></div>
-                <a href="contact.html" class="block w-full border border-[#E5BE85]/40 text-[#E5BE85] font-bold py-4 rounded-xl hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all transform translateZ(30px)">Contact Us</a>
-            </div>
-            <div class="spotlight-card p-8 text-center flex flex-col justify-between reveal delay-100">
-                <div class="transform translateZ(20px)"><h4 class="text-lg font-bold text-[#E5BE85] mb-2 tracking-wide">Middle School</h4><p class="text-4xl font-black text-[#E5BE85] mb-8">$300<span class="text-sm font-light text-[#E5BE85]/60">/mo</span></p></div>
-                <a href="contact.html" class="block w-full border border-[#E5BE85]/40 text-[#E5BE85] font-bold py-4 rounded-xl hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all transform translateZ(30px)">Contact Us</a>
-            </div>
-            <div class="spotlight-card p-8 text-center flex flex-col justify-between reveal delay-200">
-                <div class="transform translateZ(20px)"><h4 class="text-lg font-bold text-[#E5BE85] mb-2 tracking-wide">High School</h4><p class="text-4xl font-black text-[#E5BE85] mb-8">$350<span class="text-sm font-light text-[#E5BE85]/60">/mo</span></p></div>
-                <a href="contact.html" class="block w-full border border-[#E5BE85]/40 text-[#E5BE85] font-bold py-4 rounded-xl hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all transform translateZ(30px)">Contact Us</a>
-            </div>
-        </div>
-
-        <h3 class="text-xs font-bold text-[#E5BE85] uppercase tracking-widest mb-6 reveal drop-shadow-md">SAT Preparation</h3>
-        <div class="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-20">
-            <div class="spotlight-card p-10 text-center flex flex-col justify-between reveal border-[#E5BE85]/20">
-                <div class="transform translateZ(20px)"><h4 class="text-xl font-bold text-[#E5BE85] mb-2 tracking-wide">SAT - Short Term</h4><p class="text-5xl font-black text-[#E5BE85] mb-8 drop-shadow-md">$800<span class="text-sm font-light text-[#E5BE85]/60 block mt-3 uppercase tracking-widest">Summer Bootcamp (4 weeks)</span></p></div>
-                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl btn-glow uppercase tracking-wider text-sm shadow-[0_0_20px_rgba(229,190,133,0.3)]">Contact Us</a>
-            </div>
-            <div class="spotlight-card p-10 text-center flex flex-col justify-between reveal delay-100 border-[#E5BE85]/20">
-                <div class="transform translateZ(20px)"><h4 class="text-xl font-bold text-[#E5BE85] mb-2 tracking-wide">SAT - Long Term</h4><p class="text-4xl font-black text-[#E5BE85] mb-8 drop-shadow-md">$480<span class="text-sm font-light text-[#E5BE85]/60 block mt-3 uppercase tracking-widest">Monthly</span></p></div>
-                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl btn-glow uppercase tracking-wider text-sm mt-auto shadow-[0_0_20px_rgba(229,190,133,0.3)]">Contact Us</a>
+            <div class="spotlight-card p-10 reveal active border-[#E5BE85]/10">
+                <form action="https://formspree.io/f/mojykkdn" method="POST" class="space-y-8 transform translateZ(20px)">
+                    <p class="text-xs uppercase tracking-widest text-[#E5BE85]/60 pb-4 border-b border-[#E5BE85]/20 font-bold drop-shadow-sm"><span class="text-[#E5BE85] text-lg leading-none mr-1">*</span> Required Parameters</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Parent Name <span class="text-[#E5BE85]">*</span></label><input type="text" name="Parent Name" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white focus:outline-none transition-all shadow-inner"></div>
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Student Name <span class="text-[#E5BE85]">*</span></label><input type="text" name="Student Name" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white focus:outline-none transition-all shadow-inner"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Email Address <span class="text-[#E5BE85]">*</span></label><input type="email" name="Email" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white focus:outline-none transition-all shadow-inner"></div>
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Phone Number</label><input type="tel" name="Phone" class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white focus:outline-none transition-all shadow-inner"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Student Grade Level <span class="text-[#E5BE85]">*</span></label><select name="Grade Level" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none transition-all appearance-none cursor-pointer shadow-inner"><option value="" disabled selected>Select a grade...</option><option value="Elementary">Elementary (Grades 3-5)</option><option value="Middle School">Middle School (Grades 6-8)</option><option value="High School">High School</option></select></div>
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Program of Interest <span class="text-[#E5BE85]">*</span></label><select name="Program" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none transition-all appearance-none cursor-pointer shadow-inner"><option value="" disabled selected>Select a program...</option><option value="Group Cohort">Group Cohort</option><option value="Private 1-on-1">Private 1-on-1 Tutoring</option><option value="SAT Prep - Short Term">SAT Prep - Short Term</option><option value="SAT Prep - Long Term">SAT Prep - Long Term</option><option value="General Question">Just a general question</option></select></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Preferred Mode of Contact</label><select name="Preferred Contact" class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none transition-all appearance-none cursor-pointer shadow-inner"><option value="Email" selected>Email</option><option value="Phone">Phone</option></select></div>
+                    </div>
+                    <div><label class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Message / Details</label><textarea name="Message" rows="5" class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white focus:outline-none transition-all resize-y shadow-inner"></textarea></div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black text-sm uppercase tracking-widest py-5 rounded-xl btn-glow mt-8 shadow-[0_0_20px_rgba(229,190,133,0.3)]">
+                        Enquire Now
+                    </button>
+                </form>
             </div>
         </div>
     </section>
 
-    <section id="private" class="py-16 px-6 max-w-6xl mx-auto mb-24 relative z-10 perspective-container">
-        <h2 class="text-3xl font-black text-[#E5BE85] mb-12 text-center border-b border-[#E5BE85]/10 pb-6 reveal tracking-tighter drop-shadow-md">Private 1x1 Tutoring</h2>
-        <div class="max-w-xl mx-auto spotlight-card p-12 text-center reveal border-[#E5BE85]/30">
-            <div class="transform translateZ(20px)">
-                <h3 class="text-xs font-bold text-[#E5BE85] uppercase tracking-widest mb-4">Priority Protocol</h3>
-                <p class="text-[#E5BE85]/80 mb-8 leading-relaxed font-light">We offer highly personalized 1-on-1 tutoring for all grade levels and SAT prep tailored to your student's specific needs.</p>
-                <p class="text-5xl font-black text-[#E5BE85] mb-10 italic drop-shadow-lg">Contact</p>
-                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl btn-glow uppercase tracking-wider text-sm">Reach Out Today</a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-[#04060e] text-[#E5BE85]/50 py-16 text-center border-t border-[#E5BE85]/10 relative z-10 mt-auto">
+    <footer class="bg-[#04060e] text-[#E5BE85]/50 py-16 text-center border-t border-[#E5BE85]/10 mt-auto relative z-10">
         <p class="tracking-widest uppercase text-xs font-bold">&copy; 2026 180 Math. All rights reserved.</p>
     </footer>
 
@@ -122,7 +108,7 @@
                 card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
                 const xc = rect.width / 2; const yc = rect.height / 2;
                 const dx = x - xc; const dy = y - yc;
-                card.style.transform = `rotateY(${dx / 40}deg) rotateX(${-dy / 40}deg) scale3d(1.02, 1.02, 1.02)`;
+                card.style.transform = `rotateY(${dx / 80}deg) rotateX(${-dy / 80}deg) scale3d(1.01, 1.01, 1.01)`;
             };
             card.onmouseleave = () => { card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`; };
         });
