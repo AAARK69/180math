@@ -29,6 +29,10 @@
         .reveal { will-change: transform, opacity; opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
         .delay-100 { transition-delay: 100ms; }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .spotlight-card { border-width: 0.5px !important; }
+        }
     </style>
 </head>
 <body class="font-[system-ui] relative overflow-x-hidden flex flex-col min-h-screen">
@@ -45,19 +49,27 @@
                 <a href="index.html" class="text-[#E5BE85]/80 hover:text-white transition-colors link-hover">&larr; Back to Home</a>
                 <a href="test.html" class="text-[#E5BE85] hover:text-white transition-colors link-hover">Placement Test</a>
             </div>
+            <button class="md:hidden text-[#E5BE85] focus:outline-none min-h-[48px] flex items-center justify-center p-2" onclick="document.getElementById('mobile-menu-pricing').classList.toggle('hidden')">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu-pricing" class="hidden z-50 md:hidden bg-[#0B0B33]/95 backdrop-blur-3xl border-t border-[#E5BE85]/10 absolute w-full flex flex-col items-center py-6 space-y-6 shadow-2xl">
+            <a href="index.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu-pricing').classList.add('hidden')">&larr; Back to Home</a>
+            <a href="test.html" class="text-[#E5BE85] text-lg uppercase tracking-widest font-black min-h-[48px] flex items-center justify-center w-full bg-[#E5BE85]/10 py-2 rounded-xl border border-[#E5BE85]/20 mx-4 max-w-[200px]" onclick="document.getElementById('mobile-menu-pricing').classList.add('hidden')">Placement Test</a>
         </div>
     </nav>
 
-    <section class="pt-40 pb-12 px-4 max-w-6xl mx-auto text-center relative z-10 reveal active perspective-container">
-        <h1 class="text-5xl font-black text-[#E5BE85] mb-6 tracking-tighter decipher-text drop-shadow-lg">Detailed Pricing Plans</h1>
+    <section class="scroll-mt-24 pt-40 pb-12 px-4 max-w-6xl mx-auto text-center relative z-10 reveal active perspective-container">
+        <h1 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-6 tracking-tighter decipher-text drop-shadow-lg">Detailed Pricing Plans</h1>
         <p class="text-xl text-[#E5BE85]/80 max-w-2xl mx-auto leading-relaxed font-light tracking-wide drop-shadow-md">Select the tier that matches your student's current grade level. All plans include customized curriculum alignment.</p>
     </section>
 
-    <section id="group" class="py-12 px-6 max-w-6xl mx-auto relative z-10 perspective-container flex-grow">
+    <section id="group" class="scroll-mt-24 py-12 px-6 max-w-6xl mx-auto relative z-10 perspective-container flex-grow">
         <h2 class="text-3xl font-black text-[#E5BE85] mb-10 text-center border-b border-[#E5BE85]/10 pb-6 reveal tracking-tighter drop-shadow-md">Group Cohorts <span class="text-lg font-light text-[#E5BE85]/50 ml-2 tracking-normal">(Max 6 Students)</span></h2>
         
         <h3 class="text-xs font-bold text-[#E5BE85] uppercase tracking-widest mb-6 reveal drop-shadow-md">Academic Tutoring</h3>
-        <div class="grid md:grid-cols-3 gap-10 mb-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 gap-y-12 mb-20">
             <div class="spotlight-card p-8 text-center flex flex-col justify-between reveal">
                 <div class="transform translateZ(20px)"><h4 class="text-lg font-bold text-[#E5BE85] mb-2 tracking-wide">Elementary</h4><p class="text-4xl font-black text-[#E5BE85] mb-8">$250<span class="text-sm font-light text-[#E5BE85]/60">/mo</span></p></div>
                 <a href="contact.html" class="block w-full border border-[#E5BE85]/40 text-[#E5BE85] font-bold py-4 rounded-xl hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all transform translateZ(30px)">Contact Us</a>
@@ -73,33 +85,33 @@
         </div>
 
         <h3 class="text-xs font-bold text-[#E5BE85] uppercase tracking-widest mb-6 reveal drop-shadow-md">SAT Preparation</h3>
-        <div class="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 gap-y-12 max-w-4xl mx-auto mb-20">
             <div class="spotlight-card p-10 text-center flex flex-col justify-between reveal border-[#E5BE85]/20">
-                <div class="transform translateZ(20px)"><h4 class="text-xl font-bold text-[#E5BE85] mb-2 tracking-wide">SAT - Short Term</h4><p class="text-5xl font-black text-[#E5BE85] mb-8 drop-shadow-md">$800<span class="text-sm font-light text-[#E5BE85]/60 block mt-3 uppercase tracking-widest">Summer Bootcamp (4 weeks)</span></p></div>
-                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl btn-glow uppercase tracking-wider text-sm shadow-[0_0_20px_rgba(229,190,133,0.3)]">Contact Us</a>
+                <div class="transform translateZ(20px)"><h4 class="text-xl font-bold text-[#E5BE85] mb-2 tracking-wide">SAT - Short Term</h4><p class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-8 drop-shadow-md">$800<span class="text-sm font-light text-[#E5BE85]/60 block mt-3 uppercase tracking-widest">Summer Bootcamp (4 weeks)</span></p></div>
+                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl min-h-[48px] flex items-center justify-center btn-glow uppercase tracking-wider text-sm shadow-[0_0_20px_rgba(229,190,133,0.3)]">Contact Us</a>
             </div>
             <div class="spotlight-card p-10 text-center flex flex-col justify-between reveal delay-100 border-[#E5BE85]/20">
                 <div class="transform translateZ(20px)"><h4 class="text-xl font-bold text-[#E5BE85] mb-2 tracking-wide">SAT - Long Term</h4><p class="text-4xl font-black text-[#E5BE85] mb-8 drop-shadow-md">$480<span class="text-sm font-light text-[#E5BE85]/60 block mt-3 uppercase tracking-widest">Monthly</span></p></div>
-                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl btn-glow uppercase tracking-wider text-sm mt-auto shadow-[0_0_20px_rgba(229,190,133,0.3)]">Contact Us</a>
+                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl min-h-[48px] flex items-center justify-center btn-glow uppercase tracking-wider text-sm mt-auto shadow-[0_0_20px_rgba(229,190,133,0.3)]">Contact Us</a>
             </div>
         </div>
     </section>
 
-    <section id="private" class="py-16 px-6 max-w-6xl mx-auto mb-24 relative z-10 perspective-container">
+    <section id="private" class="scroll-mt-24 py-16 px-6 max-w-6xl mx-auto mb-24 relative z-10 perspective-container">
         <h2 class="text-3xl font-black text-[#E5BE85] mb-12 text-center border-b border-[#E5BE85]/10 pb-6 reveal tracking-tighter drop-shadow-md">Private 1x1 Tutoring</h2>
         <div class="max-w-xl mx-auto spotlight-card p-12 text-center reveal border-[#E5BE85]/30">
             <div class="transform translateZ(20px)">
                 <h3 class="text-xs font-bold text-[#E5BE85] uppercase tracking-widest mb-4">Priority Protocol</h3>
                 <p class="text-[#E5BE85]/80 mb-8 leading-relaxed font-light">We offer highly personalized 1-on-1 tutoring for all grade levels and SAT prep tailored to your student's specific needs.</p>
-                <p class="text-5xl font-black text-[#E5BE85] mb-10 italic drop-shadow-lg">Contact</p>
-                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl btn-glow uppercase tracking-wider text-sm">Reach Out Today</a>
+                <p class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-10 italic drop-shadow-lg">Contact</p>
+                <a href="contact.html" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black py-4 rounded-xl min-h-[48px] flex items-center justify-center btn-glow uppercase tracking-wider text-sm">Reach Out Today</a>
             </div>
         </div>
     </section>
 
     <footer class="bg-[#04060e] text-[#E5BE85]/50 py-16 text-center border-t border-[#E5BE85]/10 relative z-10 mt-auto">
         <div class="mb-8">
-            <a href="test.html" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-8 py-4 rounded-full font-black uppercase tracking-wider text-sm btn-glow inline-block shadow-[0_0_20px_rgba(229,190,133,0.3)]">Take a Free Placement Test</a>
+            <a href="test.html" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-8 py-4 rounded-full font-black uppercase tracking-wider text-sm min-h-[48px] flex items-center justify-center btn-glow inline-block shadow-[0_0_20px_rgba(229,190,133,0.3)]">Take a Free Placement Test</a>
         </div>
         <p class="tracking-widest uppercase text-xs font-bold">&copy; 2026 180 Math. All rights reserved.</p>
     </footer>
