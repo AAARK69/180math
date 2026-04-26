@@ -1,7 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Scroll setting
+    let ticking = false;
     window.addEventListener('scroll', () => {
-        document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
+                ticking = false;
+            });
+            ticking = true;
+        }
     }, { passive: true });
 
     // 2. Scramble Text Effect
