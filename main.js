@@ -165,6 +165,46 @@ document.addEventListener("DOMContentLoaded", () => {
         spawnParticle(i, true);
     }
 
+    const collisionResult = {
+        y: 0,
+        vx: 0,
+        vy: 0,
+        isBouncing: 0
+    };
+
+    function handleCollision(x, y, vx, vy, size, elasticity, baseVy, isBouncing) {
+        let hit = false;
+        for (let j = 0; j < cachedRects.length; j++) {
+            const rect = cachedRects[j];
+            if (x > rect.left && x < rect.right && y + size > rect.top && y < rect.bottom) {
+                if (vy > 0 && y < rect.top + 20) {
+                    y = rect.top - size;
+                    vy *= -elasticity;
+                    vx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2 + 1);
+                    isBouncing = 1;
+                    hit = true;
+                }
+            }
+        }
+
+        if (!hit && vy > baseVy) {
+            vy *= 0.95;
+            if (Math.abs(vy - baseVy) < 0.1) {
+                isBouncing = 0;
+                vy = baseVy;
+            }
+        }
+
+        collisionResult.y = y;
+        collisionResult.vx = vx;
+        collisionResult.vy = vy;
+        collisionResult.isBouncing = isBouncing;
+    }
+
+    function isParticleOutOfBounds(x, y, width, height, scrollY) {
+        return y > scrollY + height + 100 || x < -50 || x > width + 50;
+    }
+
     function updateParticles() {
         for (let i = 0; i < MAX_PARTICLES; i++) {
             const offset = i * PARTICLE_STRIDE;
@@ -203,29 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
             y += vy;
             rot += rotSpeed;
 
-            let hit = false;
-            for (let j = 0; j < cachedRects.length; j++) {
-                const rect = cachedRects[j];
-                if (x > rect.left && x < rect.right && y + size > rect.top && y < rect.bottom) {
-                    if (vy > 0 && y < rect.top + 20) {
-                        y = rect.top - size;
-                        vy *= -elasticity;
-                        vx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2 + 1);
-                        isBouncing = 1;
-                        hit = true;
-                    }
-                }
-            }
+            handleCollision(x, y, vx, vy, size, elasticity, baseVy, isBouncing);
+            y = collisionResult.y;
+            vx = collisionResult.vx;
+            vy = collisionResult.vy;
+            isBouncing = collisionResult.isBouncing;
 
-            if (!hit && vy > baseVy) {
-                vy *= 0.95;
-                if (Math.abs(vy - baseVy) < 0.1) {
-                    isBouncing = 0;
-                    vy = baseVy;
-                }
-            }
-
-            if (y > window.scrollY + height + 100 || x < -50 || x > width + 50) {
+            if (isParticleOutOfBounds(x, y, width, height, window.scrollY)) {
                 spawnParticle(i, false);
             } else {
                 particleData[offset + 0] = x;
