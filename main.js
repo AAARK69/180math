@@ -19,11 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el.dataset.scrambling === "true") return;
         el.dataset.scrambling = "true";
 
+        const textArray = originalText.split("");
+
         const interval = setInterval(() => {
-            el.innerText = el.innerText.split("").map((letter, index) => {
-                if(index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-            }).join("");
+            for (let i = 0; i < textArray.length; i++) {
+                if (i < iteration) {
+                    textArray[i] = originalText[i];
+                } else {
+                    textArray[i] = letters[Math.floor(Math.random() * letters.length)];
+                }
+            }
+            el.innerText = textArray.join("");
+
             if(iteration >= originalText.length) {
                 clearInterval(interval);
                 el.dataset.scrambling = "false";
