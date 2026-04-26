@@ -291,15 +291,6 @@
                                 const y = e.clientY - rect.top;
                                 card.style.setProperty("--mouse-x", `${x}px`);
                                 card.style.setProperty("--mouse-y", `${y}px`);
-                                const xc = rect.width / 2;
-                                const yc = rect.height / 2;
-                                const dx = x - xc;
-                                const dy = y - yc;
-                                card.style.transform = `rotateY(${dx / 40}deg) rotateX(${-dy / 40}deg) scale3d(1.02, 1.02, 1.02)`;
-                            }, { passive: true });
-
-                            card.addEventListener('mouseleave', () => {
-                                card.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
                             }, { passive: true });
                         }
                     });
