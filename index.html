@@ -29,6 +29,10 @@
         .reveal { will-change: transform, opacity; opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
         .delay-100 { transition-delay: 100ms; }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .spotlight-card { border-width: 0.5px !important; }
+        }
     </style>
 </head>
 <body class="font-[system-ui] relative overflow-x-hidden">
@@ -49,10 +53,22 @@
                 <a href="#faq" class="link-hover">FAQ</a>
                 <a href="test.html" class="link-hover text-[#E5BE85]">Placement Test</a>
             </div>
+            <button class="md:hidden text-[#E5BE85] focus:outline-none min-h-[48px] flex items-center justify-center p-2" onclick="document.getElementById('mobile-menu-index').classList.toggle('hidden')">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu-index" class="hidden z-50 md:hidden bg-[#0B0B33]/95 backdrop-blur-3xl border-t border-[#E5BE85]/10 absolute w-full flex flex-col items-center py-6 space-y-6 shadow-2xl">
+            <a href="#home" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu-index').classList.add('hidden')">Home</a>
+            <a href="#program" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu-index').classList.add('hidden')">Program</a>
+            <a href="#pricing" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu-index').classList.add('hidden')">Pricing</a>
+            <a href="#reviews" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu-index').classList.add('hidden')">Reviews</a>
+            <a href="#faq" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu-index').classList.add('hidden')">FAQ</a>
+            <a href="test.html" class="text-[#E5BE85] text-lg uppercase tracking-widest font-black min-h-[48px] flex items-center justify-center w-full bg-[#E5BE85]/10 py-2 rounded-xl border border-[#E5BE85]/20 mt-2 mx-4 max-w-[200px]" onclick="document.getElementById('mobile-menu-index').classList.add('hidden')">Placement Test</a>
         </div>
     </nav>
 
-    <section id="home" class="min-h-[100vh] flex flex-col justify-center items-center text-center px-4 relative pt-20 pb-24 perspective-container z-10" style="background: radial-gradient(circle at 50% 30%, #0B0B33 0%, transparent 80%);">
+    <section id="home" class="scroll-mt-24 min-h-[100vh] flex flex-col justify-center items-center text-center px-4 relative pt-20 pb-24 perspective-container z-10" style="background: radial-gradient(circle at 50% 30%, #0B0B33 0%, transparent 80%);">
         <div class="max-w-4xl w-full flex flex-col items-center z-10 reveal active">
             <img src="logo.png" alt="180 Math Logo Banner" class="w-full max-w-lg md:max-w-2xl mb-12 object-contain">
             <p class="text-xl md:text-2xl text-[#E5BE85]/90 max-w-2xl mx-auto leading-relaxed font-light tracking-wide decipher-text drop-shadow-lg">
@@ -60,14 +76,14 @@
             </p>
         </div>
         <div class="absolute bottom-16 w-full flex justify-center z-20 reveal delay-200 active perspective-container">
-            <a href="#pricing" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-12 py-5 rounded-full font-black uppercase tracking-wider text-sm btn-glow backdrop-blur-md">Get Started</a>
+            <a href="#pricing" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-12 py-5 rounded-full font-black uppercase tracking-wider text-sm min-h-[48px] flex items-center justify-center btn-glow backdrop-blur-md">Get Started</a>
         </div>
     </section>
 
-    <section id="program" class="py-32 px-4 relative z-10 border-t border-[#E5BE85]/10 backdrop-blur-sm bg-[#0B0B33]/20">
+    <section id="program" class="scroll-mt-24 py-32 px-4 relative z-10 border-t border-[#E5BE85]/10 backdrop-blur-sm bg-[#0B0B33]/20">
         <div class="max-w-6xl mx-auto text-center perspective-container">
-            <h2 class="text-5xl font-black text-[#E5BE85] mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">Program Offerings</h2>
-            <div class="grid md:grid-cols-2 gap-10 text-left">
+            <h2 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">Program Offerings</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 gap-y-12 text-left">
                 <div class="spotlight-card p-10 reveal">
                     <div class="transform translateZ(20px)">
                         <h3 class="text-3xl font-bold text-[#E5BE85] mb-8 tracking-wide">Academic Curriculum</h3>
@@ -109,9 +125,9 @@
         </div>
     </section>
 
-    <section id="pricing" class="py-32 px-6 max-w-6xl mx-auto text-center relative z-10 perspective-container">
-        <h2 class="text-5xl font-black text-[#E5BE85] mb-20 tracking-tighter reveal drop-shadow-2xl decipher-text">Simple, Transparent Pricing</h2>
-        <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+    <section id="pricing" class="scroll-mt-24 py-32 px-6 max-w-6xl mx-auto text-center relative z-10 perspective-container">
+        <h2 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-20 tracking-tighter reveal drop-shadow-2xl decipher-text">Simple, Transparent Pricing</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 gap-y-12 max-w-4xl mx-auto">
             <div class="spotlight-card p-12 flex flex-col justify-between reveal">
                 <div class="transform translateZ(30px)">
                     <h3 class="text-2xl font-bold text-[#E5BE85] mb-2 tracking-wide">Private 1-on-1</h3>
@@ -122,7 +138,7 @@
                         <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#E5BE85] shadow-[0_0_8px_#E5BE85] mr-4"></span> Intensive exam prep</li>
                     </ul>
                 </div>
-                <a href="pricing.html#private" class="block w-full py-4 border border-[#E5BE85]/40 rounded-xl font-bold text-[#E5BE85] hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all duration-300 btn-glow">Check Availability</a>
+                <a href="pricing.html#private" class="block w-full py-4 border border-[#E5BE85]/40 rounded-xl font-bold text-[#E5BE85] hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all duration-300 min-h-[48px] flex items-center justify-center btn-glow">Check Availability</a>
             </div>
             
             <div class="spotlight-card p-12 flex flex-col justify-between reveal delay-100 border-[#E5BE85]/30">
@@ -135,15 +151,15 @@
                         <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-[#E5BE85] shadow-[0_0_8px_#E5BE85] mr-4"></span> Maximum 6 students per Cohort</li>
                     </ul>
                 </div>
-                <a href="pricing.html#group" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black uppercase tracking-wider py-4 rounded-xl btn-glow shadow-[0_0_20px_rgba(229,190,133,0.4)]">View Options</a>
+                <a href="pricing.html#group" class="block w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black uppercase tracking-wider py-4 rounded-xl min-h-[48px] flex items-center justify-center btn-glow shadow-[0_0_20px_rgba(229,190,133,0.4)]">View Options</a>
             </div>
         </div>
     </section>
 
-    <section id="reviews" class="py-32 px-4 relative z-10 border-t border-[#E5BE85]/10 backdrop-blur-sm bg-[#0B0B33]/40">
+    <section id="reviews" class="scroll-mt-24 py-32 px-4 relative z-10 border-t border-[#E5BE85]/10 backdrop-blur-sm bg-[#0B0B33]/40">
         <div class="max-w-6xl mx-auto text-center perspective-container">
-            <h2 class="text-5xl font-black text-[#E5BE85] mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">What Our Learners Say</h2>
-            <div class="grid md:grid-cols-2 gap-10 text-left mb-24">
+            <h2 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">What Our Learners Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 gap-y-12 text-left mb-24">
                 
                 <div class="spotlight-card p-10 reveal flex flex-col justify-between">
                     <p class="italic text-[#E5BE85]/80 mb-8 leading-relaxed font-light text-lg transform translateZ(10px)">"I have gotten better at math by learning in a positive environment. I like coming here because I know I’m getting better and improving."</p>
@@ -166,7 +182,7 @@
                 </div>
             </div>
 
-            <h2 class="text-5xl font-black text-[#E5BE85] mt-16 mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">What Our Parents Say</h2>
+            <h2 class="text-4xl md:text-5xl font-black text-[#E5BE85] mt-16 mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">What Our Parents Say</h2>
             <div class="max-w-4xl mx-auto text-left">
                 <div class="spotlight-card p-10 reveal">
                     <p class="italic text-[#E5BE85]/80 mb-8 leading-relaxed font-light text-lg transform translateZ(10px)">"My daughter has been working with Mrs.Kosur since Summer of 2025. Mrs.Kosur has been very attentive to her academic needs and has individualized her study plan, focussing on stronger grasp of concepts. She ensures to reach out to the parents and provide insights and updates regarding the child’s progress. My child is definitely more interested and motivated to improve her performance at school, which has reflected in her grades. We have been grateful for Mrs.Kosur’s support and would highly recommend her to anyone looking for additional support for their kid’s Math journey."</p>
@@ -176,9 +192,9 @@
         </div>
     </section>
 
-    <section id="calendar" class="py-32 px-4 border-y border-[#E5BE85]/10 backdrop-blur-md bg-[#0B0B33]/50 relative z-10 perspective-container">
+    <section id="calendar" class="scroll-mt-24 py-32 px-4 border-y border-[#E5BE85]/10 backdrop-blur-md bg-[#0B0B33]/50 relative z-10 perspective-container">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-5xl font-black text-[#E5BE85] mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">Schedule & Holidays</h2>
+            <h2 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-16 tracking-tighter reveal drop-shadow-2xl decipher-text">Schedule & Holidays</h2>
             <div class="spotlight-card p-12 text-left reveal">
                 <h4 class="text-xl font-bold text-[#E5BE85] mb-6 border-b border-[#E5BE85]/20 pb-4 uppercase tracking-widest transform translateZ(20px)">Aligned with South Windsor Public Schools</h4>
                 <p class="text-[#E5BE85]/80 mb-8 leading-relaxed text-lg font-light transform translateZ(10px)">Our tutoring schedule is fully aligned with the <a href="https://www.southwindsorschools.org/287651_2" target="_blank" rel="noopener noreferrer" class="text-[#E5BE85] font-bold underline decoration-[#E5BE85] decoration-2 underline-offset-4 hover:drop-shadow-[0_0_8px_rgba(229,190,133,0.8)] transition-all">South Windsor Public Schools (SWPS) academic calendar</a>. We observe all major SWPS holidays and will work with families for one-off holidays.</p>
@@ -190,20 +206,20 @@
         </div>
     </section>
 
-    <section id="faq" class="py-32 px-4 max-w-4xl mx-auto relative z-10 perspective-container">
-        <h2 class="text-5xl font-black text-[#E5BE85] mb-16 text-center tracking-tighter reveal drop-shadow-2xl decipher-text">Frequently Asked Questions</h2>
+    <section id="faq" class="scroll-mt-24 py-32 px-4 max-w-4xl mx-auto relative z-10 perspective-container">
+        <h2 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-16 text-center tracking-tighter reveal drop-shadow-2xl decipher-text">Frequently Asked Questions</h2>
         <div class="space-y-6">
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">What subjects do you teach?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">At 180Math, we teach Mathematics starting from Elementary (Grade 3 and above) to High School (up to AP Pre-Calculus).</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">How big is the class size in a group cohort?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">There would be a maximum of 6 Students in each batch. Small batches help the students stay focussed and get individualized attention.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Do you offer homework help?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Challenging questions are always welcome in the class and benefit all students. However, students are expected to try solving their homework at home before requesting help in the class. Their attempted work, even if wrong, identifies the exact concept they need coaching on.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Do you assign homework?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Yes, homework is assigned weekly, either via textbook problems or Deltamath. Students are also encouraged to keep practicing multiplication tables 1 through 20 every week to help speed up their mental calculations. Parents are accountable to make sure their child completes the work on time and satisfactorily. A separate book for homework is requested.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">What is your Group Cohort pricing?</summary><div class="mt-6 text-[#E5BE85]/80 transform translateZ(10px)"><div class="overflow-x-auto bg-black/30 rounded-xl p-4 border border-[#E5BE85]/10 shadow-inner"><table class="w-full text-left border-collapse"><thead><tr class="border-b border-[#E5BE85]/20 text-xs uppercase tracking-widest text-[#E5BE85]"><th class="py-4 font-bold pl-4">Program</th><th class="py-4 font-bold">Price</th></tr></thead><tbody><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">Elementary</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$250/mo</td></tr><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">Middle School</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$300/mo</td></tr><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">High School</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$350/mo</td></tr><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">SAT - Short Term - Summer Bootcamp (4 weeks)</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$800</td></tr><tr class="hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">SAT - Long Term - Monthly</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$480/mo</td></tr></tbody></table></div><p class="font-bold text-[#E5BE85] text-lg mt-6 drop-shadow-md">Private 1x1 Tutoring: <span class="text-[#E5BE85]/80 font-normal italic">Call for Price</span></p></div></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">When are the fees due?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Fees are expected to be paid by 5th of every month.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Will fees be prorated for the month of June since it has only two working weeks?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Yes. The June fees will be prorated, and the adjustment will be applied in April 2027, based on the official last day of the school year.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Are the fees prorated if my child is absent for a session?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">No, fees are not prorated for student absences, as the class is still conducted for the rest of the group. If a student misses a session, the teacher will provide all materials covered—such as whiteboard notes, topics reviewed, and instructional videos. The student will also receive additional support in the following class to help them catch up.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Are the fees prorated if the teacher cancels a session?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Standard monthly fees are calculated with the understanding that up to two emergency teacher cancellations may occur during the academic year. If additional cancellations happen for any reason, every effort will be made to schedule a makeup class. If a makeup session cannot be arranged, the fees will be prorated in the following month.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">The school calendar shows 42–43 weeks. Why are students receiving 36 weeks of lessons?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">The school year includes 42 academic weeks, but 4 holiday weeks*** and 2 emergency teacher-cancellation weeks are already accounted for in the annual schedule. After excluding these six weeks, students receive 36 weeks of instruction.<br><br>If the school board extends the academic year by an additional week, we will be notified around April 2027, and class schedules will be extended accordingly.</p></details>
-            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Other than the 4 weeks mentioned, do students get additional holidays?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Currently, we follow the South Windsor Public School calendar. For Holidays falling on a weekday, such as Diwali, Holi, Presidents Day etc., parents will be consulted if a Holiday is needed. We will go with the majority. Fees will be prorated in the following month if the class is cancelled on a holiday.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">What subjects do you teach?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">At 180Math, we teach Mathematics starting from Elementary (Grade 3 and above) to High School (up to AP Pre-Calculus).</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">How big is the class size in a group cohort?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">There would be a maximum of 6 Students in each batch. Small batches help the students stay focussed and get individualized attention.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Do you offer homework help?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Challenging questions are always welcome in the class and benefit all students. However, students are expected to try solving their homework at home before requesting help in the class. Their attempted work, even if wrong, identifies the exact concept they need coaching on.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Do you assign homework?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Yes, homework is assigned weekly, either via textbook problems or Deltamath. Students are also encouraged to keep practicing multiplication tables 1 through 20 every week to help speed up their mental calculations. Parents are accountable to make sure their child completes the work on time and satisfactorily. A separate book for homework is requested.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">What is your Group Cohort pricing?</summary><div class="mt-6 text-[#E5BE85]/80 transform translateZ(10px)"><div class="overflow-x-auto bg-black/30 rounded-xl p-4 border border-[#E5BE85]/10 shadow-inner"><table class="w-full text-left border-collapse"><thead><tr class="border-b border-[#E5BE85]/20 text-xs uppercase tracking-widest text-[#E5BE85]"><th class="py-4 font-bold pl-4">Program</th><th class="py-4 font-bold">Price</th></tr></thead><tbody><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">Elementary</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$250/mo</td></tr><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">Middle School</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$300/mo</td></tr><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">High School</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$350/mo</td></tr><tr class="border-b border-[#E5BE85]/10 hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">SAT - Short Term - Summer Bootcamp (4 weeks)</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$800</td></tr><tr class="hover:bg-[#E5BE85]/5 transition"><td class="py-5 pl-4 font-semibold text-[#E5BE85]">SAT - Long Term - Monthly</td><td class="py-5 text-[#E5BE85] font-black tracking-wide">$480/mo</td></tr></tbody></table></div><p class="font-bold text-[#E5BE85] text-lg mt-6 drop-shadow-md">Private 1x1 Tutoring: <span class="text-[#E5BE85]/80 font-normal italic">Call for Price</span></p></div></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">When are the fees due?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Fees are expected to be paid by 5th of every month.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Will fees be prorated for the month of June since it has only two working weeks?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Yes. The June fees will be prorated, and the adjustment will be applied in April 2027, based on the official last day of the school year.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Are the fees prorated if my child is absent for a session?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">No, fees are not prorated for student absences, as the class is still conducted for the rest of the group. If a student misses a session, the teacher will provide all materials covered—such as whiteboard notes, topics reviewed, and instructional videos. The student will also receive additional support in the following class to help them catch up.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Are the fees prorated if the teacher cancels a session?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Standard monthly fees are calculated with the understanding that up to two emergency teacher cancellations may occur during the academic year. If additional cancellations happen for any reason, every effort will be made to schedule a makeup class. If a makeup session cannot be arranged, the fees will be prorated in the following month.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">The school calendar shows 42–43 weeks. Why are students receiving 36 weeks of lessons?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">The school year includes 42 academic weeks, but 4 holiday weeks*** and 2 emergency teacher-cancellation weeks are already accounted for in the annual schedule. After excluding these six weeks, students receive 36 weeks of instruction.<br><br>If the school board extends the academic year by an additional week, we will be notified around April 2027, and class schedules will be extended accordingly.</p></details>
+            <details class="spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-6 cursor-pointer group reveal"><summary class="min-h-[48px] flex items-center font-bold text-xl text-[#E5BE85] outline-none link-hover drop-shadow-md transform translateZ(20px)">Other than the 4 weeks mentioned, do students get additional holidays?</summary><p class="mt-4 text-[#E5BE85]/80 leading-relaxed font-light transform translateZ(10px)">Currently, we follow the South Windsor Public School calendar. For Holidays falling on a weekday, such as Diwali, Holi, Presidents Day etc., parents will be consulted if a Holiday is needed. We will go with the majority. Fees will be prorated in the following month if the class is cancelled on a holiday.</p></details>
         </div>
 
         <div class="mt-20 spotlight-card bg-[#0B0B33]/80 backdrop-blur-lg p-8 text-sm text-[#E5BE85]/70 reveal">
@@ -222,7 +238,7 @@
 
     <footer class="bg-[#04060e] text-[#E5BE85]/50 py-16 text-center border-t border-[#E5BE85]/10 relative z-10">
         <div class="mb-8">
-            <a href="test.html" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-8 py-4 rounded-full font-black uppercase tracking-wider text-sm btn-glow inline-block shadow-[0_0_20px_rgba(229,190,133,0.3)]">Take a Free Placement Test</a>
+            <a href="test.html" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-8 py-4 rounded-full font-black uppercase tracking-wider text-sm min-h-[48px] flex items-center justify-center btn-glow inline-block shadow-[0_0_20px_rgba(229,190,133,0.3)]">Take a Free Placement Test</a>
         </div>
         <p class="tracking-widest uppercase text-xs font-bold">&copy; 2026 180 Math. All rights reserved.</p>
     </footer>

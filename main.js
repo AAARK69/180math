@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.cards.forEach(card => {
         if(card.classList.contains('spotlight-card')) {
             card.addEventListener('mousemove', e => {
+                if (window.innerWidth < 768) return;
                 const rect = card._cachedRect;
                 if (!rect) return;
                 const x = e.clientX - rect.left;
@@ -116,8 +117,22 @@ document.addEventListener("DOMContentLoaded", () => {
         mouseY = e.clientY + window.scrollY;
     }, { passive: true });
 
+    window.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0) {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY + window.scrollY;
+        }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY + window.scrollY;
+        }
+    }, { passive: true });
+
     // Typed Arrays (Data-Oriented Design)
-    const MAX_PARTICLES = 150;
+    let MAX_PARTICLES = window.innerWidth < 768 ? 75 : 150;
     const PARTICLE_STRIDE = 12;
     const particleData = new Float32Array(MAX_PARTICLES * PARTICLE_STRIDE);
     const symbols = ['∫','∑','√','∆','∞','≈','π','θ','Ω','α','β','γ','λ','μ','ρ','σ','φ','ω', 'x', 'y', '='];
