@@ -1,10 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Scroll setting
-    window.addEventListener('scroll', () => {
-        document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
-    }, { passive: true });
-
-    // 2. Scramble Text Effect
+// 2. Scramble Text Effect
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
     function scramble(el) {
         let iteration = 0;
@@ -13,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
         el.dataset.scrambling = "true";
 
         const interval = setInterval(() => {
-            el.innerText = el.innerText.split("").map((letter, index) => {
+            const currentText = el.innerText || el.textContent;
+            el.innerText = currentText.split("").map((letter, index) => {
                 if(index < iteration) return originalText[index];
                 return letters[Math.floor(Math.random() * letters.length)];
             }).join("");
@@ -24,6 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
             iteration += 1 / 3;
         }, 30);
     }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Scroll setting
+    window.addEventListener('scroll', () => {
+        document.documentElement.style.setProperty('--scroll', window.scrollY + 'px');
+    }, { passive: true });
 
     // 3. Reveal Observer
     const revealObserver = new IntersectionObserver((entries) => {
@@ -299,3 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestAnimationFrame(animate);
 });
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { scramble };
+}
