@@ -1,24 +1,36 @@
 // 2. Scramble Text Effect
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
-    function scramble(el) {
-        let iteration = 0;
-        const originalText = el.innerText || el.textContent;
-        if (el.dataset.scrambling === "true") return;
-        el.dataset.scrambling = "true";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
+function scramble(el) {
+    let iteration = 0;
+    const originalText = el.innerText || el.textContent;
+    if (el.dataset.scrambling === "true") return;
+    el.dataset.scrambling = "true";
 
-        const interval = setInterval(() => {
-            const currentText = el.innerText || el.textContent;
-            el.innerText = currentText.split("").map((letter, index) => {
-                if(index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-            }).join("");
-            if(iteration >= originalText.length) {
-                clearInterval(interval);
-                el.dataset.scrambling = "false";
+    const textArray = originalText.split("");
+
+    const interval = setInterval(() => {
+        const currentText = el.innerText || el.textContent;
+        for (let i = 0; i < textArray.length; i++) {
+            if (i < iteration) {
+                textArray[i] = originalText[i];
+            } else {
+                textArray[i] = letters[Math.floor(Math.random() * letters.length)];
             }
-            iteration += 1 / 3;
-        }, 30);
-    }
+        }
+
+        if ('innerText' in el && el.innerText !== undefined) {
+             el.innerText = textArray.join("");
+        } else {
+             el.textContent = textArray.join("");
+        }
+
+        if(iteration >= originalText.length) {
+            clearInterval(interval);
+            el.dataset.scrambling = "false";
+        }
+        iteration += 1 / 3;
+    }, 30);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Scroll setting

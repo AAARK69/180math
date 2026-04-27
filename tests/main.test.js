@@ -48,8 +48,6 @@ describe('scramble function', () => {
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789∫∑√∆∞≈";
         const textArray = el.innerText.split('');
 
-        // Since iteration starts at 0, and after one tick it becomes 1/3, the first few chars
-        // might not be the original text depending on rounding, but they must be from the letters string
         textArray.forEach(char => {
             if (char !== 'W' && char !== 'O' && char !== 'R' && char !== 'L' && char !== 'D') {
                 expect(letters).toContain(char);
@@ -61,14 +59,13 @@ describe('scramble function', () => {
 
     test('should handle elements using textContent instead of innerText', () => {
         const el = document.createElement('div');
-        // jsdom elements have textContent but we can simulate innerText being missing
         Object.defineProperty(el, 'innerText', { value: undefined, writable: true });
         el.textContent = 'CONTENT';
 
         scramble(el);
         jest.runAllTimers();
 
-        expect(el.innerText).toBe('CONTENT');
+        expect(el.textContent).toBe('CONTENT');
         expect(el.dataset.scrambling).toBe('false');
     });
 });
