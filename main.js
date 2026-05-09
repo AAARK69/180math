@@ -150,9 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
     symbolCtx.fillStyle = '#E5BE85';
     symbolCtx.textBaseline = 'middle';
     symbolCtx.textAlign = 'center';
+    symbolCtx.font = `${maxSymbolSize * 0.8}px monospace`;
 
     for (let i = 0; i < symbols.length; i++) {
-        symbolCtx.font = `${maxSymbolSize * 0.8}px monospace`;
         symbolCtx.fillText(symbols[i], i * maxSymbolSize + maxSymbolSize/2, maxSymbolSize/2);
     }
 
