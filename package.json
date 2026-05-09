@@ -20,7 +20,7 @@
   "homepage": "https://github.com/AAARK69/180math#readme",
   "devDependencies": {
     "jest": "^30.3.0",
-    "jest-environment-jsdom": "^30.4.1",
+    "jest-environment-jsdom": "^30.3.0",
     "jsdom": "^29.0.2"
   },
   "directories": {
