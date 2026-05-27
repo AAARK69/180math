@@ -9,3 +9,7 @@
 ## 2024-05-26 - [Custom Focus Indicators]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator significantly harms accessibility for keyboard users.
 **Action:** Always provide custom focus styles (like `focus:border-[color]` and `focus:ring-[width]`) when disabling the default browser outline, ensuring they are applied to all interactive elements such as buttons and form inputs.
+
+## $(date +%Y-%m-%d) - [Regex Specificity in Tailwind CSS Patching]
+**Learning:** Using broad regex replacements (like `sed s/outline-none/.../`) to fix accessibility issues causes severe side effects when utility classes are shared across multiple UI components (e.g., corrupting mobile navigation).
+**Action:** When applying Tailwind utility classes programmatically via scripts, use strict boundaries (e.g., `outline-none link-hover`) and target only the specific elements or files intended to prevent cascading styling failures.
