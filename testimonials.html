@@ -47,7 +47,7 @@
 
     <nav class="bg-[#0B0B33]/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] fixed w-full z-50 top-0 border-b border-[#E5BE85]/10">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center transform translateZ(0)">
-            <a href="index.html" class="flex items-center"><img src="logo.png" alt="180 Math Logo" class="h-12 w-auto drop-shadow-md"></a>
+            <a href="index.html" class="flex items-center" aria-label="Home"><img src="logo.png" alt="180 Math Logo" class="h-12 w-auto drop-shadow-md"></a>
             <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-[#E5BE85]/80">
                 <a href="index.html" class="link-hover">Home</a>
                 <a href="about.html" class="link-hover">About</a>
@@ -59,20 +59,20 @@
                 <a href="contact.html" class="link-hover">Contact</a>
             </div>
 
-            <button aria-label="Toggle navigation menu" class="md:hidden text-[#E5BE85] focus:outline-none focus:ring-2 focus:ring-[#E5BE85]/50 rounded-lg min-h-[48px] flex items-center justify-center p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <button aria-label="Toggle navigation menu" class="md:hidden text-[#E5BE85] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85] focus:ring-2 focus:ring-[#E5BE85]/50 rounded-lg  min-h-[48px] flex items-center justify-center p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden z-50 md:hidden bg-[#0B0B33]/95 backdrop-blur-3xl border-t border-[#E5BE85]/10 absolute w-full flex flex-col items-center py-6 space-y-6 shadow-2xl">
-            <a href="index.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a>
-            <a href="about.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">About</a>
-            <a href="program.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Program</a>
-            <a href="pricing.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Pricing</a>
-            <a href="testimonials.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Testimonials</a>
-            <a href="schedule.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Schedule</a>
-            <a href="faq.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">FAQ</a>
-            <a href="contact.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold min-h-[48px] flex items-center justify-center w-full"  onclick="document.getElementById('mobile-menu').classList.add('hidden')"> Contact</a>
+            <a href="index.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a>
+            <a href="about.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">About</a>
+            <a href="program.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Program</a>
+            <a href="pricing.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Pricing</a>
+            <a href="testimonials.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Testimonials</a>
+            <a href="schedule.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Schedule</a>
+            <a href="faq.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">FAQ</a>
+            <a href="contact.html" class="text-[#E5BE85]/80 text-lg uppercase tracking-widest font-bold  min-h-[48px] flex items-center justify-center w-full"  onclick="document.getElementById('mobile-menu').classList.add('hidden')"> Contact</a>
         </div>
     </nav>
 

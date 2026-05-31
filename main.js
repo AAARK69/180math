@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
+(function() {
+    document.addEventListener("DOMContentLoaded", () => {
     // 1. Scroll setting
     let ticking = false;
     window.addEventListener('scroll', () => {
@@ -54,12 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // 4. Cached rects for cards & mouse move
-    window.cards = Array.from(document.querySelectorAll(".spotlight-card, .btn-glow"));
+    const cards = Array.from(document.querySelectorAll(".spotlight-card, .btn-glow"));
 
     let cachedRects = [];
 
-    window.updateRects = function updateRects() {
-        cachedRects = window.cards.map(card => {
+    function updateRects() {
+        cachedRects = cards.map(card => {
             const rect = card.getBoundingClientRect();
             // Cache on element for mousemove
             card._cachedRect = {
@@ -78,15 +79,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    window.resizeObserver = new ResizeObserver(() => {
-        window.updateRects();
+    const resizeObserver = new ResizeObserver(() => {
+        updateRects();
         if (typeof resizeCanvas === 'function') resizeCanvas();
     });
 
-    window.cards.forEach(card => window.resizeObserver.observe(card));
-    window.resizeObserver.observe(document.body);
+    cards.forEach(card => resizeObserver.observe(card));
+    resizeObserver.observe(document.body);
 
-    window.cards.forEach(card => {
+    cards.forEach(card => {
         if(card.classList.contains('spotlight-card')) {
             card.addEventListener('mousemove', e => {
                 if (window.innerWidth < 768) return;
@@ -247,11 +248,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const dx = x - mouseX;
             const dy = y - mouseY;
             const distSq = dx * dx + dy * dy;
-            if (distSq < 22500) {
+            if (distSq > 0 && distSq < 22500) {
                 const dist = Math.sqrt(distSq);
-                const force = (150 - dist) / 150;
-                vx += (dx / dist) * force * 1.5;
-                vy += (dy / dist) * force * 0.5;
+                const forceMult = ((150 - dist) / (150 * dist));
+                vx += dx * forceMult * 1.5;
+                vy += dy * forceMult * 0.5;
             }
 
             vx *= 0.95;
@@ -313,3 +314,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestAnimationFrame(animate);
 });
+})();
