@@ -17,3 +17,7 @@
 ## 2024-05-27 - [Focus Visible vs Focus]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator harms accessibility for keyboard users. However, adding custom focus styles using `:focus` (like `focus:border-[color]` and `focus:ring-[width]`) creates lingering visual rings when a user clicks the element with a mouse.
 **Action:** Always provide custom focus styles using `focus-visible:` pseudo-classes instead of `focus:` to ensure visual focus rings are only shown for keyboard navigation and not upon mouse clicks.
+
+## 2026-06-03 - [Progressive Disclosure vs Layout Shifts]
+**Learning:** Completely hiding required action buttons (like "Next" or "Submit" in a quiz) until conditions are met causes unexpected layout popping when they suddenly appear, and leaves users without a clear affordance of what they need to do to progress. Using a visible but visually-disabled state (e.g., lower opacity, cursor-not-allowed) provides a clear hint of the required action without breaking layout flow.
+**Action:** When gating progression, prefer using `disabled` attributes and styling (e.g., `disabled:opacity-50`) over completely hiding elements with `display: none` or `.hidden`.
