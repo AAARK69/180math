@@ -17,3 +17,7 @@
 ## 2024-05-27 - [Focus Visible vs Focus]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator harms accessibility for keyboard users. However, adding custom focus styles using `:focus` (like `focus:border-[color]` and `focus:ring-[width]`) creates lingering visual rings when a user clicks the element with a mouse.
 **Action:** Always provide custom focus styles using `focus-visible:` pseudo-classes instead of `focus:` to ensure visual focus rings are only shown for keyboard navigation and not upon mouse clicks.
+
+## 2026-06-04 - [Multi-Step Visual Progress Indicator]
+**Learning:** In multi-step interactions (like diagnostic tests or long forms), a textual "Question X of Y" is helpful, but adding a visual progress bar significantly improves the user's perception of effort remaining and reduces abandonment rates.
+**Action:** Always consider adding visual progress indicators for any interaction flow that spans multiple views or questions.
