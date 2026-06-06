@@ -17,3 +17,7 @@
 ## 2024-05-27 - [Focus Visible vs Focus]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator harms accessibility for keyboard users. However, adding custom focus styles using `:focus` (like `focus:border-[color]` and `focus:ring-[width]`) creates lingering visual rings when a user clicks the element with a mouse.
 **Action:** Always provide custom focus styles using `focus-visible:` pseudo-classes instead of `focus:` to ensure visual focus rings are only shown for keyboard navigation and not upon mouse clicks.
+
+## 2024-06-06 - [Diagnostic Test Accessibility - Focus States]
+**Learning:** Diagnostic test workflows (like `test.html`) often use standard button/divs for answering multiple-choice options. While these elements might respond to clicks and hover states, they frequently lack keyboard focus indication (`:focus-visible`), rendering them invisible to keyboard-only users who tab through options. Using Tailwind utilities like `focus-visible:ring-2` provides the necessary visual feedback without breaking mouse-click aesthetics.
+**Action:** When auditing custom quiz or assessment tools, always verify that the selection buttons/divs and the navigation controls (like "Next Question") exhibit a clear focus ring using `focus-visible`.
