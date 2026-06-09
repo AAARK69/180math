@@ -17,3 +17,7 @@
 ## 2024-05-27 - [Focus Visible vs Focus]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator harms accessibility for keyboard users. However, adding custom focus styles using `:focus` (like `focus:border-[color]` and `focus:ring-[width]`) creates lingering visual rings when a user clicks the element with a mouse.
 **Action:** Always provide custom focus styles using `focus-visible:` pseudo-classes instead of `focus:` to ensure visual focus rings are only shown for keyboard navigation and not upon mouse clicks.
+
+## 2024-05-28 - [Form Placeholder Context]
+**Learning:** Adding descriptive placeholders (like "e.g. Jane Doe" or "(555) 123-4567") significantly reduces cognitive load by providing a clear example of the expected format, guiding users effectively before they even type.
+**Action:** Always include helpful `placeholder` attributes for form inputs where the expected format or type of input can be clarified by example. Ensure they maintain contrast constraints with `placeholder:text-[color]` styles.
