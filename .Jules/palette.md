@@ -17,3 +17,7 @@
 ## 2024-05-27 - [Focus Visible vs Focus]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator harms accessibility for keyboard users. However, adding custom focus styles using `:focus` (like `focus:border-[color]` and `focus:ring-[width]`) creates lingering visual rings when a user clicks the element with a mouse.
 **Action:** Always provide custom focus styles using `focus-visible:` pseudo-classes instead of `focus:` to ensure visual focus rings are only shown for keyboard navigation and not upon mouse clicks.
+
+## 2026-06-10 - [Descriptive Form Placeholders]
+**Learning:** Input fields without placeholders can be confusing for users, as the expected format is not always immediately obvious. Providing a descriptive placeholder (e.g. 'e.g. Jane Doe' instead of just 'Name') improves UX and reduces input errors. However, the placeholder color must have sufficient contrast, so styling it explicitly with tools like Tailwind's `placeholder:text-[color]/30` ensures it is readable while still distinct from the user's actual input.
+**Action:** Always include descriptive `placeholder` attributes for text inputs and textareas to clarify expected formats, and style them distinctly from input text using utilities like `placeholder:text-[color]/30` to maintain proper contrast constraints.
