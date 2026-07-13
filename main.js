@@ -258,11 +258,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const dx = x - mouseX;
             const dy = y - mouseY;
             const distSq = dx * dx + dy * dy;
-            if (distSq < 22500) {
+            if (distSq > 0 && distSq < 22500) {
                 const dist = Math.sqrt(distSq);
-                const force = (150 - dist) / 150;
-                vx += (dx / dist) * force * 1.5;
-                vy += (dy / dist) * force * 0.5;
+                const f = (150 - dist) / (150 * dist);
+                vx += dx * f * 1.5;
+                vy += dy * f * 0.5;
             }
 
             vx *= 0.95;

@@ -17,3 +17,7 @@
 ## 2024-05-27 - [Focus Visible vs Focus]
 **Learning:** Removing default browser focus rings (e.g., using Tailwind's `focus:outline-none`) without providing a custom visual focus indicator harms accessibility for keyboard users. However, adding custom focus styles using `:focus` (like `focus:border-[color]` and `focus:ring-[width]`) creates lingering visual rings when a user clicks the element with a mouse.
 **Action:** Always provide custom focus styles using `focus-visible:` pseudo-classes instead of `focus:` to ensure visual focus rings are only shown for keyboard navigation and not upon mouse clicks.
+
+## 2026-07-13 - [URL Pre-selection for Context]
+**Learning:** Adding query parameter parsing (e.g., `?program=openhouse`) allows external or specialized pages to seamlessly link to a generic contact form while preserving the user's specific intent. This reduces friction and makes RSVPing more direct.
+**Action:** Use query parameters to dynamically pre-select relevant dropdown options in generic forms (like `contact.html`) to improve conversion flow from specific entry points.
