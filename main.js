@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Pre-select program if query parameter is present (e.g. ?program=openhouse)
+    const urlParams = new URLSearchParams(window.location.search);
+    const programParam = urlParams.get('program');
+    if (programParam === 'openhouse') {
+        const programSelect = document.getElementById('program');
+        if (programSelect) {
+            programSelect.value = 'Open House';
+        }
+    }
+
     // 1. Scroll setting
     let ticking = false;
     window.addEventListener('scroll', () => {
