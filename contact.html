@@ -27,7 +27,10 @@
         .link-hover:hover { color: #ffffff; text-shadow: 0 0 12px rgba(229,190,133,.6); }
         input:focus, select:focus, textarea:focus { box-shadow: 0 0 20px rgba(229, 190, 133, 0.15); border-color: #E5BE85 !important; }
 
-        .reveal { will-change: transform, opacity; opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal { will-change: transform, opacity; opacity: 1; transform: translateY(0) translateZ(0); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (min-width: 768px) {
+            .reveal { opacity: 0; transform: translateY(40px) translateZ(-50px); }
+        }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
 
         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
