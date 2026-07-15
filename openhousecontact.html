@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>180 Math | Premier Math Tutoring</title>
-    <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <title>RSVP for Open House | 180 Math</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --scroll: 0px; }
@@ -28,10 +25,10 @@
         .btn-glow:hover { box-shadow: 0 15px 30px rgba(229, 190, 133, 0.4), 0 5px 15px rgba(0,0,0,0.5); transform: translateY(-8px) translateZ(50px); }
         .link-hover { transition: color .2s ease, text-shadow .2s ease; }
         .link-hover:hover { color: #ffffff; text-shadow: 0 0 12px rgba(229,190,133,.6); }
+        input:focus, select:focus, textarea:focus { box-shadow: 0 0 20px rgba(229, 190, 133, 0.15); border-color: #E5BE85 !important; }
 
         .reveal { will-change: transform, opacity; opacity: 0; transform: translateY(40px) translateZ(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
-        .delay-100 { transition-delay: 100ms; }
 
         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
             .spotlight-card { border-width: 0.5px !important; }
@@ -46,8 +43,8 @@
     <div class="bg-grid"></div>
 
     <nav class="bg-[#0B0B33]/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] fixed w-full z-50 top-0 border-b border-[#E5BE85]/10">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center transform translateZ(0)">
-            <a href="index.html" class="flex items-center"><img src="logo.png" alt="180 Math Logo" class="h-12 w-auto drop-shadow-md"></a>
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center transform translateZ(0)">
+            <a href="index.html" class="flex items-center"><img src="logo.png" alt="180 Math Logo" class="h-10 w-auto drop-shadow-md"></a>
             <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-[#E5BE85]/80">
                 <a href="index.html" class="link-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Home</a>
                 <a href="openhouse.html" class="link-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Open House</a>
@@ -59,7 +56,6 @@
                 <a href="faq.html" class="link-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">FAQs</a>
                 <a href="contact.html" class="link-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Contact</a>
             </div>
-
             <button aria-label="Toggle navigation menu" class="md:hidden text-[#E5BE85] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-lg min-h-[48px] flex items-center justify-center p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
@@ -78,44 +74,34 @@
         </div>
     </nav>
 
+    <section class="flex-grow scroll-mt-24 pt-40 pb-24 px-6 relative z-10 perspective-container">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12 reveal active">
+                <h1 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-6 tracking-tighter decipher-text drop-shadow-lg">RSVP for Open House</h1>
+                <p class="text-lg text-[#E5BE85]/80 leading-relaxed font-light tracking-wide drop-shadow-md">Please fill out the form below to RSVP for our upcoming Open House. We look forward to seeing you there!</p>
+            </div>
 
-    <main class="flex-grow pt-32 pb-20 px-6 relative z-10 perspective-container">
-        <div class="max-w-4xl mx-auto space-y-16">
-
-            <header class="text-center reveal">
-                <h1 class="text-5xl md:text-6xl font-black text-[#E5BE85] mb-6 tracking-tighter drop-shadow-lg">Open House</h1>
-                <p class="text-xl md:text-2xl text-[#E5BE85]/80 font-light max-w-2xl mx-auto leading-relaxed drop-shadow-md">Join us to learn more about our premier math tutoring program, meet our instructors, and see how we can help your student succeed.</p>
-            </header>
-
-            <section class="spotlight-card p-10 md:p-14 text-center reveal delay-100">
-                <h2 class="text-2xl font-bold text-[#E5BE85] mb-6 uppercase tracking-widest">Event Details</h2>
-
-                <div class="grid md:grid-cols-3 gap-8 mb-10 text-left">
-                    <div class="bg-[#0B0B33]/50 p-6 rounded-xl border border-[#E5BE85]/10">
-                        <h3 class="text-sm font-bold uppercase tracking-widest text-[#E5BE85]/70 mb-2">Date 1</h3>
-                        <p class="text-lg text-white">August 7, 2026<br>6:00 PM: Elementary Math<br>7:00 PM: Middle School Math</p>
+            <div class="spotlight-card p-10 reveal active border-[#E5BE85]/10">
+                <form action="https://formspree.io/f/mojykkdn" method="POST" class="space-y-8 transform translateZ(20px)">
+                    <p class="text-xs uppercase tracking-widest text-[#E5BE85]/60 pb-4 border-b border-[#E5BE85]/20 font-bold drop-shadow-sm"><span class="text-[#E5BE85] text-lg leading-none mr-1">*</span> Required Parameters</p>
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+                        <div><label for="parentName" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Parent Name <span class="text-[#E5BE85]">*</span></label><input id="parentName" type="text" name="Parent Name" placeholder="e.g. Jane Doe" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white placeholder:text-white/30 focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all shadow-inner"></div>
+                        <div><label for="gradeLevel" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Student Grade Level <span class="text-[#E5BE85]">*</span></label><select id="gradeLevel" name="Grade Level" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all appearance-none cursor-pointer shadow-inner"><option value="" disabled selected>Select a grade...</option><option value="Elementary">Elementary (Grades 3-5)</option><option value="Middle School">Middle School (Grades 6-8)</option><option value="High School">High School</option></select></div>
+                        <div><label for="phone" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Phone Number <span class="text-[#E5BE85]">*</span></label><input id="phone" type="tel" name="Phone" placeholder="e.g. (555) 123-4567" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white placeholder:text-white/30 focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all shadow-inner"></div>
                     </div>
-                    <div class="bg-[#0B0B33]/50 p-6 rounded-xl border border-[#E5BE85]/10">
-                        <h3 class="text-sm font-bold uppercase tracking-widest text-[#E5BE85]/70 mb-2">Date 2</h3>
-                        <p class="text-lg text-white">August 14, 2026<br>6:00 PM: High School Math<br>7:00 PM: SAT Math</p>
-                    </div>
-                    <div class="bg-[#0B0B33]/50 p-6 rounded-xl border border-[#E5BE85]/10">
-                        <h3 class="text-sm font-bold uppercase tracking-widest text-[#E5BE85]/70 mb-2">Where</h3>
-                        <p class="text-lg text-white">180 Math Center<br>17 Longmeadow Drive<br>South Windsor, CT</p>
-                        <a href="https://maps.google.com/?q=17+Longmeadow+Drive,+South+Windsor,+CT" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-[#E5BE85] underline underline-offset-4 font-bold uppercase tracking-wider text-xs link-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Get Directions &nearr;</a>
-                    </div>
-                </div>
 
-                <h3 class="text-xl font-bold text-[#E5BE85] mb-6">Let us know you're coming!</h3>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="openhousecontact.html" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-8 py-4 rounded-full font-black uppercase tracking-wider text-sm min-h-[48px] flex items-center justify-center btn-glow inline-block shadow-[0_0_20px_rgba(229,190,133,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B33]">RSVP / Contact Us</a>
-                </div>
-            </section>
+                    <button type="submit"  class="w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black text-sm uppercase tracking-widest py-5 rounded-xl min-h-[48px] flex items-center justify-center btn-glow mt-8 shadow-[0_0_20px_rgba(229,190,133,0.3)]">
+                        RSVP Now
+                    </button>
+                </form>
+            </div>
         </div>
-    </main>
+    </section>
 
-
-    <footer class="bg-[#04060e] text-[#E5BE85]/50 py-16 text-center border-t border-[#E5BE85]/10 relative z-10 mt-auto">
+<!--    <footer class="bg-[#04060e] text-[#E5BE85]/50 py-16 text-center border-t border-[#E5BE85]/10 mt-auto relative z-10">
+        <div class="mb-8">
+            <a href="test.html" class="bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] px-8 py-4 rounded-full font-black uppercase tracking-wider text-sm min-h-[48px] flex items-center justify-center btn-glow inline-block shadow-[0_0_20px_rgba(229,190,133,0.3)]">Take a Free Placement Test</a> -->
+        </div>
         <p class="tracking-widest uppercase text-xs font-bold">&copy; 2026 180 Math. All rights reserved.</p>
     </footer>
 
