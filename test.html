@@ -164,7 +164,7 @@
             document.getElementById('question-text').innerText = questionData.q;
 
             const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
+            optionsContainer.textContent = '';
 
             questionData.options.forEach((opt, index) => {
                 const wrapper = document.createElement('div');
@@ -258,7 +258,7 @@
                 ctaBtn.href = "contact.html";
                 ctaBtn.className = "inline-block bg-[#E5BE85]/10 border border-[#E5BE85]/40 text-[#E5BE85] font-bold py-3 px-8 rounded-xl hover:bg-[#E5BE85] hover:text-[#0B0B33] transition-all btn-glow shadow-md";
                 ctaBtn.textContent = "Join an Advanced Cohort";
-                document.getElementById('cta-container').innerHTML = '';
+                document.getElementById('cta-container').textContent = '';
                 document.getElementById('cta-container').appendChild(ctaBtn);
             } else {
                 message = "We identified some key areas where you can improve your understanding.";
@@ -276,14 +276,14 @@
 
                 wrapper.appendChild(label);
                 wrapper.appendChild(ctaBtn);
-                document.getElementById('cta-container').innerHTML = '';
+                document.getElementById('cta-container').textContent = '';
                 document.getElementById('cta-container').appendChild(wrapper);
             }
 
             document.getElementById('score-message').innerText = message;
 
             const breakdownContainer = document.getElementById('breakdown-container');
-            breakdownContainer.innerHTML = '';
+            breakdownContainer.textContent = '';
 
             if (incorrectAnswers.length > 0) {
                 const header = document.createElement('h3');
