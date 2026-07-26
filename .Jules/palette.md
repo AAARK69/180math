@@ -20,3 +20,7 @@
 ## 2024-07-15 - Interactive Element State Transitions
 **Learning:** Hiding structural UI elements (like "Next" buttons) dynamically causes sudden layout shifts and lacks visual affordance for the user regarding multi-step processes.
 **Action:** Always prefer disabling elements with clear visual indicators (`disabled:opacity-50`, `disabled:cursor-not-allowed`) rather than toggling visibility classes (like `hidden`).
+
+## 2026-07-26 - [Programmatic Focus Management for Dynamic Views]
+**Learning:** When dynamically updating views without a page reload (e.g., single page app navigation or quiz views), screen readers are not inherently aware of the new content context and keyboard focus remains on the previous interaction element (like a 'Next' button). This forces users to tab backwards through potentially hidden or off-screen elements.
+**Action:** Programmatically shift focus to the new primary heading by adding `tabindex="-1"` and calling `.focus()` via JavaScript. Concurrently, apply `focus:outline-none` to the element to prevent default browser focus rings on non-interactive focused elements.
