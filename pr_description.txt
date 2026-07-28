@@ -1,7 +1,17 @@
-✨ **Result:**
-Implemented a reliable device detection script in the `<head>` of both `index.html` (desktop layout) and `index1.html` (mobile layout). The scripts check `navigator.userAgent` and `window.innerWidth` to seamlessly route users to the appropriate version of the site upon load.
+💡 What
+Added an `aria-label` attribute to the mobile navigation toggle button (`☰`) and `alt` text to the logo images in `index1.html`.
 
-**Details:**
-* Modified `index.html` to detect mobile agents or narrow widths (<=768px) and redirect to `index1.html`.
-* Modified `index1.html` to detect non-mobile agents and wide widths (>768px) and redirect back to `index.html`.
-* This setup creates a fallback safety net for incoming user links while respecting the current multi-page architecture.
+🎯 Why
+Icon-only navigation buttons in custom multi-page HTML apps often lack ARIA labels, making screen readers announce them as just "button". Adding `aria-label` provides screen reader context for the main mobile toggle. Adding `alt` text to images ensures screen readers can announce visual brand elements.
+
+📸 Before/After
+Before:
+`<button onclick="toggleMenu()" class="md:hidden text-2xl">☰</button>`
+`<img src="logo.png" class="h-10 md:h-12">`
+
+After:
+`<button onclick="toggleMenu()" class="md:hidden text-2xl" aria-label="Toggle navigation menu">☰</button>`
+`<img src="logo.png" alt="180 Math Logo" class="h-10 md:h-12">`
+
+♿ Accessibility
+Improves accessibility for screen reader users by providing an explicit label for the mobile menu toggle button and adding alt text to images that previously lacked it.
