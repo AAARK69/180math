@@ -24,3 +24,7 @@
 ## 2026-07-26 - [Programmatic Focus Management for Dynamic Views]
 **Learning:** When dynamically updating views without a page reload (e.g., single page app navigation or quiz views), screen readers are not inherently aware of the new content context and keyboard focus remains on the previous interaction element (like a 'Next' button). This forces users to tab backwards through potentially hidden or off-screen elements.
 **Action:** Programmatically shift focus to the new primary heading by adding `tabindex="-1"` and calling `.focus()` via JavaScript. Concurrently, apply `focus:outline-none` to the element to prevent default browser focus rings on non-interactive focused elements.
+
+## 2024-07-30 - [Toggle Button State Announcement]
+**Learning:** For toggle buttons (like mobile menus), simply adding an `aria-label` is not enough for screen readers. They need to know the current state (open or closed) and what the button controls. Without `aria-expanded` and `aria-controls`, screen reader users won't know if the menu actually opened or closed after clicking.
+**Action:** Always ensure toggle buttons have `aria-expanded` (toggling true/false) and `aria-controls` pointing to the ID of the controlled element, updating them programmatically when the state changes.
