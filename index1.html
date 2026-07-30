@@ -93,7 +93,7 @@ button, a {
         </div>
 
         <!-- Mobile button -->
-        <button onclick="toggleMenu()" class="md:hidden text-2xl">
+        <button onclick="toggleMenu()" class="md:hidden text-2xl" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="menu">
             ☰
         </button>
     </div>
@@ -228,7 +228,12 @@ button, a {
 
 <script>
 function toggleMenu() {
-    document.getElementById("menu").classList.toggle("hidden");
+    const menu = document.getElementById("menu");
+    const btn = document.querySelector('button[aria-controls="menu"]');
+    menu.classList.toggle("hidden");
+    if (btn) {
+        btn.setAttribute("aria-expanded", !menu.classList.contains("hidden"));
+    }
 }
 </script>
 
