@@ -1,7 +1,0 @@
-✨ **Result:**
-Implemented a reliable device detection script in the `<head>` of both `index.html` (desktop layout) and `index1.html` (mobile layout). The scripts check `navigator.userAgent` and `window.innerWidth` to seamlessly route users to the appropriate version of the site upon load.
-
-**Details:**
-* Modified `index.html` to detect mobile agents or narrow widths (<=768px) and redirect to `index1.html`.
-* Modified `index1.html` to detect non-mobile agents and wide widths (>768px) and redirect back to `index.html`.
-* This setup creates a fallback safety net for incoming user links while respecting the current multi-page architecture.
