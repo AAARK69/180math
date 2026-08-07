@@ -24,3 +24,7 @@
 ## 2026-07-26 - [Programmatic Focus Management for Dynamic Views]
 **Learning:** When dynamically updating views without a page reload (e.g., single page app navigation or quiz views), screen readers are not inherently aware of the new content context and keyboard focus remains on the previous interaction element (like a 'Next' button). This forces users to tab backwards through potentially hidden or off-screen elements.
 **Action:** Programmatically shift focus to the new primary heading by adding `tabindex="-1"` and calling `.focus()` via JavaScript. Concurrently, apply `focus:outline-none` to the element to prevent default browser focus rings on non-interactive focused elements.
+
+## 2024-05-28 - [Form Submission Feedback]
+**Learning:** Synchronous form submissions (like Formspree) cause a 1-2 second delay where the page appears frozen before redirecting. This lacks visual affordance and can lead to users clicking 'Submit' multiple times, causing duplicate entries.
+**Action:** Always intercept form `submit` events to immediately disable the submit button and provide an inline loading indicator (like a spinner) to confirm the action has been registered.
