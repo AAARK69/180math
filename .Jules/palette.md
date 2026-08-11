@@ -24,3 +24,7 @@
 ## 2026-07-26 - [Programmatic Focus Management for Dynamic Views]
 **Learning:** When dynamically updating views without a page reload (e.g., single page app navigation or quiz views), screen readers are not inherently aware of the new content context and keyboard focus remains on the previous interaction element (like a 'Next' button). This forces users to tab backwards through potentially hidden or off-screen elements.
 **Action:** Programmatically shift focus to the new primary heading by adding `tabindex="-1"` and calling `.focus()` via JavaScript. Concurrently, apply `focus:outline-none` to the element to prevent default browser focus rings on non-interactive focused elements.
+
+## 2026-08-11 - [Safe Global Form Loading States]
+**Learning:** When intercepting form `submit` events globally to provide visual loading states (like disabling buttons or adding spinners), synchronously changing state can permanently brick buttons if other validation scripts or AJAX handlers prevent the default submission.
+**Action:** Always defer the UI loading state using `setTimeout(..., 0)` and verify `!e.defaultPrevented` before executing the change to ensure the action is actually proceeding.
