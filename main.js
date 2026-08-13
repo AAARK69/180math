@@ -312,4 +312,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     requestAnimationFrame(animate);
+
+    // 6. Global Form Submit Handler (Loading State)
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", (e) => {
+            setTimeout(() => {
+                if (!e.defaultPrevented) {
+                    const btn = e.submitter || form.querySelector('button[type="submit"], button:not([type="button"]), input[type="submit"]');
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.classList.add('opacity-50', 'cursor-not-allowed');
+                        const originalText = btn.innerHTML;
+                        btn.dataset.originalText = originalText;
+                        btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Submitting...`;
+                    }
+                }
+            }, 0);
+        });
+    });
+
+    // Handle BFCache (Back/Forward Cache) restoration to re-enable submit buttons
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            document.querySelectorAll("form button[disabled], form input[type='submit'][disabled]").forEach(btn => {
+                if (btn.dataset.originalText) {
+                    btn.innerHTML = btn.dataset.originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            });
+        }
+    });
 });
