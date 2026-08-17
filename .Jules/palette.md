@@ -28,3 +28,7 @@
 ## 2024-08-12 - [Global Form Submit Visual Loading Feedback]
 **Learning:** When intercepting form `submit` events globally to provide visual loading states (e.g., disabling the button or adding a spinner), if a user submits a form and then clicks the browser's "Back" button, the page will often be restored from the back-forward cache (BFCache) with the button still permanently disabled and spinning.
 **Action:** Always listen to the `pageshow` event and check if `e.persisted` is true to re-enable submit buttons when restoring from the back-forward cache. Additionally, ensure the `e.submitter` is used to target the exact button clicked, instead of relying on a generic `button[type="submit"]` selector that fails for `<input type="submit">` or multiple submit buttons.
+
+## 2024-10-24 - [Mobile Default Visibility for Intersection Animations]
+**Learning:** Initializing critical content with `opacity: 0` for scroll animations (`.reveal`) breaks the experience on mobile devices where viewport size discrepancies or JS intersection observer failures might prevent the "active" state from ever triggering. Content remains permanently invisible.
+**Action:** Always make reveal animations default to fully visible (`opacity: 1`, `transform: none`) on small screens, and restrict the hidden initial state (`opacity: 0`) exclusively to desktop viewports using `@media (min-width: 768px)` to ensure content is accessible by default.
