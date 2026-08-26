@@ -86,24 +86,24 @@ button, a {
 
         <!-- Desktop menu -->
         <div class="hidden md:flex space-x-6 text-xs uppercase tracking-widest">
-            <a href="#home">Home</a>
-            <a href="#program">Program</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#faq">FAQ</a>
+            <a href="#home" class="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Home</a>
+            <a href="#program" class="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Program</a>
+            <a href="#pricing" class="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Pricing</a>
+            <a href="#faq" class="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">FAQ</a>
         </div>
 
         <!-- Mobile button -->
-        <button onclick="toggleMenu()" aria-label="Toggle navigation menu" class="md:hidden text-2xl">
+        <button onclick="toggleMenu()" aria-label="Toggle navigation menu" class="md:hidden text-2xl min-h-[48px] flex items-center justify-center p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-lg">
             ☰
         </button>
     </div>
 
     <!-- Mobile menu -->
     <div id="menu" class="hidden md:hidden flex flex-col items-center py-4 space-y-4 bg-[#0B0B33]">
-        <a href="#home" onclick="toggleMenu()">Home</a>
-        <a href="#program" onclick="toggleMenu()">Program</a>
-        <a href="#pricing" onclick="toggleMenu()">Pricing</a>
-        <a href="#faq" onclick="toggleMenu()">FAQ</a>
+        <a href="#home" onclick="toggleMenu()" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Home</a>
+        <a href="#program" onclick="toggleMenu()" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Program</a>
+        <a href="#pricing" onclick="toggleMenu()" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">Pricing</a>
+        <a href="#faq" onclick="toggleMenu()" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-sm">FAQ</a>
     </div>
 </nav>
 
