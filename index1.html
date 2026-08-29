@@ -93,17 +93,17 @@ button, a {
         </div>
 
         <!-- Mobile button -->
-        <button onclick="toggleMenu()" aria-label="Toggle navigation menu" class="md:hidden text-2xl">
+        <button onclick="toggleMenu()" aria-label="Toggle navigation menu" class="md:hidden text-2xl p-2 min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50 rounded-lg">
             ☰
         </button>
     </div>
 
     <!-- Mobile menu -->
     <div id="menu" class="hidden md:hidden flex flex-col items-center py-4 space-y-4 bg-[#0B0B33]">
-        <a href="#home" onclick="toggleMenu()">Home</a>
-        <a href="#program" onclick="toggleMenu()">Program</a>
-        <a href="#pricing" onclick="toggleMenu()">Pricing</a>
-        <a href="#faq" onclick="toggleMenu()">FAQ</a>
+        <a href="#home" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50" onclick="toggleMenu()">Home</a>
+        <a href="#program" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50" onclick="toggleMenu()">Program</a>
+        <a href="#pricing" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50" onclick="toggleMenu()">Pricing</a>
+        <a href="#faq" class="min-h-[48px] flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5BE85]/50" onclick="toggleMenu()">FAQ</a>
     </div>
 </nav>
 
