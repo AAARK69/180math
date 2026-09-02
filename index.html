@@ -37,16 +37,7 @@
             .spotlight-card { border-width: 0.5px !important; }
         }
     </style>
-    <script>
-        // Device detection to redirect mobile/vertical users to index1.html
-        (function() {
-            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            var isVertical = window.innerWidth <= 768;
-            if (isMobile || isVertical) {
-                window.location.replace("index1.html" + window.location.hash);
-            }
-        })();
-    </script>
+
 </head>
 <body class="font-[system-ui] relative overflow-x-hidden">
     <!-- Open House Banner -->
