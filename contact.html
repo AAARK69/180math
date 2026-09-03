@@ -94,10 +94,48 @@ To help us serve you more effectively, please include as much relevant detail as
                         <div><label for="email" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Email Address <span class="text-[#E5BE85]">*</span></label><input id="email" type="email" name="Email" placeholder="e.g. jane@example.com" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white placeholder:text-white/30 focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all shadow-inner"></div>
                         <div><label for="phone" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Phone Number</label><input id="phone" type="tel" name="Phone" placeholder="e.g. (555) 123-4567" class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white placeholder:text-white/30 focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all shadow-inner"></div>
                     </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label for="gradeLevel" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Student Grade Level <span class="text-[#E5BE85]">*</span></label><select id="gradeLevel" name="Grade Level" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all appearance-none cursor-pointer shadow-inner"><option value="" disabled selected>Select a grade...</option><option value="Elementary">Elementary (Grades 3-5)</option><option value="Middle School">Middle School (Grades 6-8)</option><option value="High School">High School</option></select></div>
-                        <div><label for="program" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Program of Interest <span class="text-[#E5BE85]">*</span></label><select id="program" name="Program" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all appearance-none cursor-pointer shadow-inner"><option value="" disabled selected>Select a program...</option><option value="Group Cohort">Group Cohort</option><option value="Private 1-on-1">Private 1-on-1 Tutoring</option><option value="SAT Prep - Short Term">SAT Prep - Short Term</option><option value="SAT Prep - Long Term">SAT Prep - Long Term</option><option value="General Question">Just a general question</option><option value="Open House 26-27">Open House 26-27</option></select></div>
+                        <div>
+                            <label for="gradeLevel" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Student Grade Level <span class="text-[#E5BE85]">*</span></label>
+                            <select id="gradeLevel" name="Grade Level" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all appearance-none cursor-pointer shadow-inner">
+                                <option value="" disabled selected>Select a grade...</option>
+                                <option value="Elementary">Elementary (Grades 3-5)</option>
+                                <option value="Middle School">Middle School (Grades 6-8)</option>
+                                <option value="9th Grade">9th Grade</option>
+                                <option value="10th Grade">10th Grade</option>
+                                <option value="11th Grade">11th Grade</option>
+                                <option value="12th Grade">12th Grade</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="program" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Program of Interest <span class="text-[#E5BE85]">*</span></label>
+                            <select id="program" name="Program" required class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all appearance-none cursor-pointer shadow-inner">
+                                <option value="" disabled selected>Select a program...</option>
+                                <option value="Academic Curriculum">Academic Curriculum</option>
+                                <option value="SAT Preparation">SAT Preparation</option>
+                                <option value="Homework Help">Homework Help</option>
+                                <option value="Test Preparation">Test Preparation</option>
+                                <option value="General Question">Just a general question</option>
+                                <option value="Open House 26-27">Open House 26-27</option>
+                            </select>
+                        </div>
                     </div>
+
+                    <!-- Dynamic Plan Details (Hidden by default) -->
+                    <div id="planDetailsContainer" class="hidden">
+                        <label for="planDetails" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Plan Details <span class="text-[#E5BE85]">*</span></label>
+                        <select id="planDetails" name="Plan Details" class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-[#E5BE85] focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all appearance-none cursor-pointer shadow-inner">
+                            <option value="" disabled selected>Select a plan duration/type...</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Display -->
+                    <div id="priceDisplayContainer" class="hidden mt-4 p-4 rounded-xl border border-[#E5BE85]/30 bg-[#E5BE85]/5 text-center">
+                        <span class="text-sm uppercase tracking-widest font-bold text-[#E5BE85]/80 block mb-1">Total Due Now</span>
+                        <span id="priceDisplay" class="text-3xl font-black text-[#E5BE85]">$0.00</span>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8"> </div>
 
                 <div>
@@ -122,7 +160,7 @@ To help us serve you more effectively, please include as much relevant detail as
                     
                     <div><label for="message" class="block text-xs uppercase tracking-widest font-bold text-[#E5BE85]/80 mb-3">Message / Details</label><textarea id="message" name="Message" rows="5" placeholder="How can we help you?" class="w-full bg-[#0B0B33]/50 border border-[#E5BE85]/20 rounded-xl px-5 py-4 text-white placeholder:text-white/30 focus:outline-none focus-visible:border-[#E5BE85] focus-visible:ring-1 focus-visible:ring-[#E5BE85] transition-all resize-y shadow-inner"></textarea></div>
                     
-                    <button type="submit" class="w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black text-sm uppercase tracking-widest py-5 rounded-xl min-h-[48px] flex items-center justify-center btn-glow mt-8 shadow-[0_0_20px_rgba(229,190,133,0.3)]">
+                    <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-[#E5BE85] to-[#c79a55] text-[#0B0B33] font-black text-sm uppercase tracking-widest py-5 rounded-xl min-h-[48px] flex items-center justify-center btn-glow mt-8 shadow-[0_0_20px_rgba(229,190,133,0.3)]">
                         Enquire Now
                     </button>
                 </form>
@@ -138,5 +176,214 @@ To help us serve you more effectively, please include as much relevant detail as
     </footer>
 
     <script src="main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeSelect = document.getElementById('gradeLevel');
+            const programSelect = document.getElementById('program');
+            const planDetailsContainer = document.getElementById('planDetailsContainer');
+            const planDetailsSelect = document.getElementById('planDetails');
+            const priceDisplayContainer = document.getElementById('priceDisplayContainer');
+            const priceDisplay = document.getElementById('priceDisplay');
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.querySelector('form');
+
+            const pricingMatrix = {
+                "Academic Curriculum": {
+                    "Elementary": [
+                        { label: "Group Cohorts - 2 hr/week", price: 250 },
+                        { label: "Private - 1 hr/week", price: 300 },
+                        { label: "Private - 2 hr/week", price: 600 }
+                    ],
+                    "Middle School": [
+                        { label: "Group Cohorts - 2 hr/week", price: 300 },
+                        { label: "Private - 1 hr/week", price: 350 },
+                        { label: "Private - 2 hr/week", price: 700 }
+                    ],
+                    "High School": [
+                        { label: "Group Cohorts - 2 hr/week", price: 350 },
+                        { label: "Private - 1 hr/week", price: 400 },
+                        { label: "Private - 2 hr/week", price: 800 }
+                    ],
+                    "9th Grade": [{ label: "Group Cohorts - 2 hr/week", price: 350 }, { label: "Private - 1 hr/week", price: 400 }, { label: "Private - 2 hr/week", price: 800 }],
+                    "10th Grade": [{ label: "Group Cohorts - 2 hr/week", price: 350 }, { label: "Private - 1 hr/week", price: 400 }, { label: "Private - 2 hr/week", price: 800 }],
+                    "11th Grade": [{ label: "Group Cohorts - 2 hr/week", price: 350 }, { label: "Private - 1 hr/week", price: 400 }, { label: "Private - 2 hr/week", price: 800 }],
+                    "12th Grade": [{ label: "Group Cohorts - 2 hr/week", price: 350 }, { label: "Private - 1 hr/week", price: 400 }, { label: "Private - 2 hr/week", price: 800 }]
+                },
+                "SAT Preparation": {
+                    "9th Grade": [{ label: "Paper tests - Group 2 hr/wk", price: 480 }],
+                    "10th Grade": [{ label: "Paper tests - Group 2 hr/wk", price: 480 }],
+                    "11th Grade": [
+                        { label: "Digital tests - Private 1 hr/wk", price: 500 },
+                        { label: "Digital tests - Private 2 hr/wk", price: 1000 }
+                    ],
+                    "12th Grade": [
+                        { label: "Digital tests - Private 1 hr/wk", price: 500 },
+                        { label: "Digital tests - Private 2 hr/wk", price: 1000 }
+                    ]
+                },
+                "Homework Help": {
+                    "Elementary": [
+                        { label: "Monthly: Group 1/2 hr/week", price: 60 },
+                        { label: "Monthly: Group 1 hr/week", price: 120 },
+                        { label: "A-la-carte: Group 1/2 hr Class", price: 15 },
+                        { label: "A-la-carte: Group 1 hr Class", price: 30 },
+                        { label: "A-la-carte: Private 1/2 hr Class", price: 30 },
+                        { label: "A-la-carte: Private 1 hr Class", price: 60 }
+                    ],
+                    "Middle School": [
+                        { label: "Monthly: Group 1/2 hr/week", price: 80 },
+                        { label: "Monthly: Group 1 hr/week", price: 160 },
+                        { label: "A-la-carte: Group 1/2 hr Class", price: 20 },
+                        { label: "A-la-carte: Group 1 hr Class", price: 40 },
+                        { label: "A-la-carte: Private 1/2 hr Class", price: 40 },
+                        { label: "A-la-carte: Private 1 hr Class", price: 80 }
+                    ],
+                    "High School": [
+                        { label: "Monthly: Group 1/2 hr/week", price: 100 },
+                        { label: "Monthly: Group 1 hr/week", price: 200 },
+                        { label: "A-la-carte: Group 1/2 hr Class", price: 25 },
+                        { label: "A-la-carte: Group 1 hr Class", price: 50 },
+                        { label: "A-la-carte: Private 1/2 hr Class", price: 50 },
+                        { label: "A-la-carte: Private 1 hr Class", price: 100 }
+                    ],
+                    "9th Grade": [{ label: "Monthly: Group 1/2 hr/week", price: 100 }, { label: "Monthly: Group 1 hr/week", price: 200 }, { label: "A-la-carte: Group 1/2 hr Class", price: 25 }, { label: "A-la-carte: Group 1 hr Class", price: 50 }, { label: "A-la-carte: Private 1/2 hr Class", price: 50 }, { label: "A-la-carte: Private 1 hr Class", price: 100 }],
+                    "10th Grade": [{ label: "Monthly: Group 1/2 hr/week", price: 100 }, { label: "Monthly: Group 1 hr/week", price: 200 }, { label: "A-la-carte: Group 1/2 hr Class", price: 25 }, { label: "A-la-carte: Group 1 hr Class", price: 50 }, { label: "A-la-carte: Private 1/2 hr Class", price: 50 }, { label: "A-la-carte: Private 1 hr Class", price: 100 }],
+                    "11th Grade": [{ label: "Monthly: Group 1/2 hr/week", price: 100 }, { label: "Monthly: Group 1 hr/week", price: 200 }, { label: "A-la-carte: Group 1/2 hr Class", price: 25 }, { label: "A-la-carte: Group 1 hr Class", price: 50 }, { label: "A-la-carte: Private 1/2 hr Class", price: 50 }, { label: "A-la-carte: Private 1 hr Class", price: 100 }],
+                    "12th Grade": [{ label: "Monthly: Group 1/2 hr/week", price: 100 }, { label: "Monthly: Group 1 hr/week", price: 200 }, { label: "A-la-carte: Group 1/2 hr Class", price: 25 }, { label: "A-la-carte: Group 1 hr Class", price: 50 }, { label: "A-la-carte: Private 1/2 hr Class", price: 50 }, { label: "A-la-carte: Private 1 hr Class", price: 100 }]
+                },
+                "Test Preparation": {
+                    "Middle School": [
+                        { label: "Monthly: Group 2 sessions: 4 hr/month", price: 180 },
+                        { label: "A-la-carte: Group 2 hr Class", price: 90 },
+                        { label: "A-la-carte: Private 2 hrs Class", price: 180 }
+                    ],
+                    "High School": [
+                        { label: "Monthly: Group 2 sessions: 4 hr/month", price: 200 },
+                        { label: "A-la-carte: Group 2 hr Class", price: 100 },
+                        { label: "A-la-carte: Private 2 hrs Class", price: 200 }
+                    ],
+                    "9th Grade": [{ label: "Monthly: Group 2 sessions: 4 hr/month", price: 200 }, { label: "A-la-carte: Group 2 hr Class", price: 100 }, { label: "A-la-carte: Private 2 hrs Class", price: 200 }],
+                    "10th Grade": [{ label: "Monthly: Group 2 sessions: 4 hr/month", price: 200 }, { label: "A-la-carte: Group 2 hr Class", price: 100 }, { label: "A-la-carte: Private 2 hrs Class", price: 200 }],
+                    "11th Grade": [{ label: "Monthly: Group 2 sessions: 4 hr/month", price: 200 }, { label: "A-la-carte: Group 2 hr Class", price: 100 }, { label: "A-la-carte: Private 2 hrs Class", price: 200 }],
+                    "12th Grade": [{ label: "Monthly: Group 2 sessions: 4 hr/month", price: 200 }, { label: "A-la-carte: Group 2 hr Class", price: 100 }, { label: "A-la-carte: Private 2 hrs Class", price: 200 }]
+                }
+            };
+
+            let currentPrice = 0;
+            let currentPriceStr = "";
+
+            function updateUI() {
+                const grade = gradeSelect.value;
+                const program = programSelect.value;
+
+                planDetailsSelect.innerHTML = '<option value="" disabled selected>Select a plan duration/type...</option>';
+                planDetailsContainer.classList.add('hidden');
+                priceDisplayContainer.classList.add('hidden');
+                planDetailsSelect.required = false;
+                submitBtn.innerText = "Enquire Now";
+                currentPrice = 0;
+
+                if (!grade || !program) return;
+
+                if (program === "General Question" || program === "Open House 26-27") {
+                    return;
+                }
+
+                if (pricingMatrix[program] && pricingMatrix[program][grade]) {
+                    const options = pricingMatrix[program][grade];
+                    options.forEach(opt => {
+                        const optionEl = document.createElement('option');
+                        optionEl.value = opt.price + "|" + opt.label;
+                        optionEl.textContent = opt.label + " - $" + opt.price;
+                        planDetailsSelect.appendChild(optionEl);
+                    });
+
+                    planDetailsContainer.classList.remove('hidden');
+                    planDetailsSelect.required = true;
+                } else if (pricingMatrix[program] && Object.keys(pricingMatrix[program]).length > 0) {
+                     planDetailsSelect.innerHTML = '<option value="" disabled selected>Not applicable for this grade level</option>';
+                     planDetailsContainer.classList.remove('hidden');
+                     planDetailsSelect.required = false;
+                }
+            }
+
+            function updatePrice() {
+                if (planDetailsSelect.value) {
+                    const parts = planDetailsSelect.value.split('|');
+                    currentPrice = parseInt(parts[0]);
+                    currentPriceStr = "$" + currentPrice + ".00";
+                    priceDisplay.textContent = currentPriceStr;
+                    priceDisplayContainer.classList.remove('hidden');
+                    submitBtn.innerText = "Proceed to Payment";
+                }
+            }
+
+            gradeSelect.addEventListener('change', updateUI);
+            programSelect.addEventListener('change', updateUI);
+            planDetailsSelect.addEventListener('change', updatePrice);
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Form validation (built-in HTML5 takes care of most of it)
+                if(!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                const formData = new FormData(form);
+                if (planDetailsSelect.value) {
+                    const parts = planDetailsSelect.value.split('|');
+                    formData.set('Plan Details', parts[1]);
+                    formData.append('Calculated Price', "$" + parts[0]);
+                }
+
+                // Change button state to loading
+                const originalText = submitBtn.innerText;
+                submitBtn.innerText = "Processing...";
+                submitBtn.disabled = true;
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        if (currentPrice > 0) {
+                            // Redirect to paypal placeholder with price (optional: encode price in URL)
+                            window.location.href = "https://paypal.me/placeholder/" + currentPrice;
+                        } else {
+                            // Regular submission success
+                            alert("Thank you! Your message has been sent.");
+                            form.reset();
+                            updateUI();
+                            submitBtn.innerText = "Enquire Now";
+                            submitBtn.disabled = false;
+                        }
+                    } else {
+                        throw new Error("Formspree response not OK");
+                    }
+                }).catch(error => {
+                    console.error("Error submitting form", error);
+                    alert("There was an error submitting the form. Please try again.");
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                });
+            });
+
+            // Handle BFCache navigation
+            window.addEventListener('pageshow', (e) => {
+                if (e.persisted) {
+                    submitBtn.disabled = false;
+                    updatePrice();
+                    if(currentPrice === 0) submitBtn.innerText = "Enquire Now";
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
