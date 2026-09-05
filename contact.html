@@ -36,6 +36,8 @@
     </style>
 </head>
 <body class="font-[system-ui] relative overflow-x-hidden flex flex-col min-h-screen">
+    <a href="#main-content" class="sr-only focus:not-sr-only absolute top-0 left-0 bg-[#E5BE85] text-[#0B0B33] px-4 py-2 z-[9999] font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B0B33] rounded-br-lg">Skip to main content</a>
+
 
     <canvas id="math-physics" class="fixed inset-0 z-[0] pointer-events-none opacity-90"></canvas>
     <div class="cinematic-noise"></div>
@@ -74,7 +76,7 @@
         </div>
     </nav>
 
-    <section class="flex-grow scroll-mt-24 pt-40 pb-24 px-6 relative z-10 perspective-container">
+    <section id="main-content" class="flex-grow scroll-mt-24 pt-40 pb-24 px-6 relative z-10 perspective-container">
         <div class="max-w-3xl mx-auto">
             <div class="text-center mb-12 reveal active">
                 <h1 class="text-4xl md:text-5xl font-black text-[#E5BE85] mb-6 tracking-tighter decipher-text drop-shadow-lg">Initialize Contact / Ask a question</h1>
