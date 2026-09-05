@@ -28,3 +28,7 @@
 ## 2024-08-12 - [Global Form Submit Visual Loading Feedback]
 **Learning:** When intercepting form `submit` events globally to provide visual loading states (e.g., disabling the button or adding a spinner), if a user submits a form and then clicks the browser's "Back" button, the page will often be restored from the back-forward cache (BFCache) with the button still permanently disabled and spinning.
 **Action:** Always listen to the `pageshow` event and check if `e.persisted` is true to re-enable submit buttons when restoring from the back-forward cache. Additionally, ensure the `e.submitter` is used to target the exact button clicked, instead of relying on a generic `button[type="submit"]` selector that fails for `<input type="submit">` or multiple submit buttons.
+
+## 2024-05-14 - Skip to Main Content Links
+**Learning:** For multi-page static HTML sites heavily relying on repetitive navigation blocks (like this repository's structure), screen reader and keyboard-only users face significant friction navigating to primary content on every page load. The site previously entirely lacked "Skip to main content" links.
+**Action:** Always inject a `<a class="sr-only focus:not-sr-only ...">` right after the `<body>` tag pointing to the main content container (`#main-content` or existing container IDs) to provide a semantic and accessible way for users to bypass navigation. Ensure the class styling allows it to become visually apparent during keyboard focus.
