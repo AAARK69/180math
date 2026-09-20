@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.poster-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  /* 4:3 Aspect Ratio */
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background-color: #050a1f; /* Deep space blue fallback */
+}
+
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.logo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Let interactions pass through if any */
+}
+
+.logo-image {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  /* Add a subtle glow to make it pop against the stars */
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+}
