@@ -28,3 +28,7 @@
 ## 2024-08-12 - [Global Form Submit Visual Loading Feedback]
 **Learning:** When intercepting form `submit` events globally to provide visual loading states (e.g., disabling the button or adding a spinner), if a user submits a form and then clicks the browser's "Back" button, the page will often be restored from the back-forward cache (BFCache) with the button still permanently disabled and spinning.
 **Action:** Always listen to the `pageshow` event and check if `e.persisted` is true to re-enable submit buttons when restoring from the back-forward cache. Additionally, ensure the `e.submitter` is used to target the exact button clicked, instead of relying on a generic `button[type="submit"]` selector that fails for `<input type="submit">` or multiple submit buttons.
+
+## 2024-05-28 - [Focus States on Dynamically Rendered Inputs]
+**Learning:** For custom styled form controls like radio buttons where the actual input is visually hidden (`sr-only`), dynamic generation of these elements requires applying the correct focus proxy classes during creation. Using Tailwind's `peer` on the input and `peer-focus-visible` on the adjacent label provides an accessible and visual focus state without extra JavaScript focus listeners.
+**Action:** When dynamically constructing custom inputs, ensure structural accessibility classes (`peer` on the input, `peer-focus-visible` states on the adjacent interactive label) are explicitly added via JavaScript DOM manipulation.
