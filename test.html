@@ -162,6 +162,7 @@
             const questionData = quizData[currentTier][currentQuestionIndex];
             document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of ${quizData[currentTier].length}`;
             document.getElementById('question-text').innerText = questionData.q;
+            document.getElementById('question-text').focus();
 
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
